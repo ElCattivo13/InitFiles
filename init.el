@@ -224,7 +224,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; more info: https://www.emacswiki.org/emacs/EmacsLispMode                              ;
                                                                                          ;
-(add-hook 'emacs-lisp-mode-hook (lambda () (linum-mode)))                                ;
+(add-hook 'emacs-lisp-mode-hook                                                          ;
+  (lambda () (linum-mode)                                                                ;
+             (define-key emacs-lisp-mode-map                                             ;
+	       (kbd "C-c C-c") 'comment-or-uncomment-region)))                           ;
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
