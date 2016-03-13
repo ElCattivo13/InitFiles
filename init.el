@@ -29,6 +29,21 @@
 (package-initialize)
 
 
+;; check OS type
+;; from http://ergoemacs.org/emacs/elisp_determine_OS_version.html
+(cond
+ ((string-equal system-type "windows-nt") ; Microsoft Windows
+  (progn
+    (message "Microsoft Windows")))
+ ((string-equal system-type "darwin") ; Mac OS X
+  (progn
+    (message "Mac OS X")))
+ ((string-equal system-type "gnu/linux") ; linux
+  (progn
+    (message "Linux"))))
+
+
+
 ;; add /usr/texbin to PATH, so LaTeX compile works within Emacs
 (setenv "PATH" 
   (concat (getenv "PATH")
@@ -230,41 +245,41 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LaTeX                                                                                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
+                                                                                              ;
+                                                                                              ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Basic AucTeX Setup                                                                   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+                                                                                              ;
 ;(load "auctex.el" nil t t)  ;; not needed anymore
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
-
+                                                                                              ;
 ;; nach Compile-Befehl werden Warnungen mit angezeigt
 (setq TeX-debug-warning t)          
-
+                                                                                              ;
 ;; nach Compile-Befehl werden BadBoxes mit angezeigt
 (setq TeX-debug-bad-boxes t)
-
+                                                                                              ;
 ;; scoll automtically with the compilation output
 (setq compilation-scroll-output t)
-
-
+                                                                                              ;
+                                                                                              ;
 (setq-default TeX-master nil)       ; kein TeX Master File per default
 (setq TeX-PDF-mode t)               ; PDF statt DVI per default
-
+                                                                                              ;
 (add-hook 'LaTeX-mode-hook (lambda () (set-fill-column 100))) ; Zeilenumbruch
 (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)        ; nach 100 Zeichen
 (add-hook 'LaTeX-mode-hook 'visual-line-mode)         ; Word Wrap
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)          ; Mathe Modus
 (add-hook 'LaTeX-mode-hook 'turn-on-font-lock)        ; Syntax Highlight
 (add-hook 'LaTeX-mode-hook (lambda () (linum-mode)))  ; Zeilennummern automatisch  ;
-
+                                                                                              ;
 (setq TeX-electric-sub-and-superscript t) ; automatische Klammern bei _ und ^
-
-
-
-
+                                                                                              ;
+                                                                                              ;
+                                                                                              ;
+                                                                                              ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; My LaTeX Mode Key Bindings                                                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -293,9 +308,9 @@
 (add-hook 'LaTeX-mode-hook 'latex-my-bindings)                                           ;
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
+                                                                                              ;
+                                                                                              ;
+                                                                                              ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Spellchecking                                                                        ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -315,8 +330,8 @@
 (add-hook 'LaTeX-mode-hook (lambda () (flyspell-mode)))                                  ;
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
+                                                                                              ;
+                                                                                              ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; RefTeX                                                                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -345,8 +360,8 @@
                                                                                          ;
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
+                                                                                              ;
+                                                                                              ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Math Symbols with F12                                                                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -370,8 +385,8 @@
 			("," "cdot" nil nil)))                                           ;
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
+                                                                                              ;
+                                                                                              ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Additional Code Folding Symbols                                                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -406,8 +421,8 @@
 			              (TeX-fold-buffer)))                                ;
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
+                                                                                              ;
+                                                                                              ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TeX-Master Clean and CleanAll                                                        ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -427,8 +442,8 @@
 	 "\\.fdb_latexmk")))))                                                           ;
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
+                                                                                              ;
+                                                                                              ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Delete Biber Cache                                                                   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -441,21 +456,21 @@
    TeX-command-list)))                                                                   ;
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Outline Minor Mode                                                                   ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                                                                         ;
-(add-hook 'LaTeX-mode-hook (lambda() (outline-minor-mode t)))                            ;
-                                                                                         ;
-(add-hook 'outline-minor-mode-hook                                                       ;
-          (lambda ()                                                                     ;
-            (require 'outline-magic)                                                     ;
-            (define-key outline-minor-mode-map [C-tab] 'outline-cycle)))                 ;
-                                                                                         ;
-                                                                                         ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                                                                              ;
+                                                                                              ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
+;; Outline Minor Mode                                                                   ;;    ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
+                                                                                         ;    ;
+(add-hook 'LaTeX-mode-hook (lambda() (outline-minor-mode t)))                            ;    ;
+                                                                                         ;    ;
+(add-hook 'outline-minor-mode-hook                                                       ;    ;
+          (lambda ()                                                                     ;    ;
+            (require 'outline-magic)                                                     ;    ;
+            (define-key outline-minor-mode-map [C-tab] 'outline-cycle)))                 ;    ;
+                                                                                         ;    ;
+                                                                                         ;    ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
 
 
 
