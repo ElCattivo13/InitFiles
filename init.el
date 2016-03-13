@@ -9,6 +9,7 @@
 ;; last update: 2016-03-10
 ;;
 ;; ToDo: - tell RefTeX to look for bib files in the current directory
+;;       - Dont ask for open processes when exiting
 ;;
 ;;
 ;; this init file is in a GIT repo and then loaded via
@@ -151,10 +152,10 @@
 ;; set ZShell as default                                                                 ;
 ;(setq  explicit-shell-file-name '"/bin/zsh")                                            ;
                                                                                          ;
-;; Emacs doesn't ask to kill active processes in eshell on exit                          ;
-;(defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)                ;
-;  "Prevent annoying \"Active processes exist\" query when you quit Emacs."              ;
-;  (flet ((process-list ())) ad-do-it))                                                  ;
+;; Emacs doesn't ask to kill active processes in eshell on exit
+;(defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
+;  "Prevent annoying \"Active processes exist\" query when you quit Emacs."
+;  (flet ((process-list ())) ad-do-it))
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
