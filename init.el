@@ -304,7 +304,8 @@
 ;; Bind keys in LaTeX mode                                                               ;    ;
 (defun latex-my-bindings ()                                                              ;    ;
     (define-key LaTeX-mode-map (kbd "<f5>") 'latex-my-master)                            ;    ;
-    (define-key LaTeX-mode-map (kbd "<f6>") 'TeX-next-error)                             ;    ;
+    ;(define-key LaTeX-mode-map (kbd "<f6>") 'TeX-next-error)                            ;    ;
+    (define-key LaTeX-mode-map (kbd "<f6>") 'TeX-view)                                   ;    ;
     (define-key LaTeX-mode-map (kbd "<f7>") 'latex-fold-and-save)                        ;    ;
     (define-key LaTeX-mode-map (kbd "C-c C-c") 'TeX-comment-or-uncomment-region)         ;    ;
 )                                                                                        ;    ;
