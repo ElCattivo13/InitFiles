@@ -136,7 +136,7 @@
 (global-set-key [f13] 'magit-status)                                                     ;
                                                                                          ;
 ;; mit Ctrl-C Ctrl-C Bereich auskommentieren                                             ;
-(global-set-key (kbd "C-c C-c") 'comment-region)                                         ;
+;(global-set-key (kbd "C-c C-c") 'comment-region)                                         ;
                                                                                          ;
                                                                                          ;
                                                                                          ;
