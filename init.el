@@ -11,6 +11,8 @@
 ;; ToDo: - tell RefTeX to look for bib files in the current directory
 ;;
 ;;
+;; this init file is in a GIT repo and then loaded via
+;; (load "~/Documents/GIT/EmacsInit/init.el")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; General Setup                                                                        ;;
