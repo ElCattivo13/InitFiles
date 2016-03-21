@@ -112,18 +112,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Color settings                                                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+					                                                 ;
+;(require 'color-theme-sanityinc-tomorrow)
+
+;(load-theme 'DarkLaTeXColorTheme t)                                                      ;
                                                                                          ;
-(load-theme 'DarkLaTeXColorTheme t)                                                      ;
-                                                                                         ;
-;; Themes that are considered safe to load. (Not sure if I really need that)             ;
-(setq custom-safe-themes                                                                 ;
- '("4019f8c1cb0dd097844b9113f58364ff599c5089a8c91d6704df7288f744d35a"                    ;
-   "c74d1844a6c20730642636576dd51ce769a6669de15eb8fa4616415152289472"                    ;
-   "7a6e615cf74fc336cc0af034f4702967cca1e250b2515aff9e78986fc6bae944"                    ;
-   "995b8c44f03e9936a3fb72f861434a0e6fb6dbf0428d7db6246ed01d9a2b968c"                    ;
-   "ee3c6505b3899db27fc7f3f41d2e3d2ff811f29c6669fed55ba0fd496ed40556"                    ;
-   "3f93f2483d761ff57814e8c93d0b414bdd3f67b0ea8be6375053338048511acc"                    ;
-   default))                                                                             ;
                                                                                          ;
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
