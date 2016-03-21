@@ -330,8 +330,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
                                                                                          ;    ;
 ;; get Aspell to work and enable flyspell                                                ;    ;
-(setq ispell-program-name "/opt/local/bin/aspell"                                        ;    ;
+;(setq ispell-program-name "/opt/local/bin/aspell"                                       ;    ;
+(setq ispell-program-name "/usr/local/bin/aspell"                                        ;    ;
       ispell-dictionary "english"                                                        ;    ;
+;      ispell-personal-dictionary "/Users/boehme/Library/Preferences/cocoAspell/LocalDictionary.pws"         
       ispell-dictionary-alist                                                            ;    ;
       (let ((default '("[A-Za-z]" "[^A-Za-z]" "[']" nil                                  ;    ;
                        ("-B" "-d" "english" "--dict-dir"                                 ;    ;
