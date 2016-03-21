@@ -10,6 +10,9 @@
 ;;
 ;; ToDo: - tell RefTeX to look for bib files in the current directory
 ;;       - Dont ask for open processes when exiting
+;;       - good color setting
+;;       - Aspell personal dictionary
+;;       - Magit -> word-diff=color
 ;;
 ;;
 ;; this init file is in a GIT repo and then loaded via
@@ -35,13 +38,13 @@
 (cond
  ((string-equal system-type "windows-nt") ; Microsoft Windows
   (progn
-    (message "Microsoft Windows")))
+    (message "Microsoft Windows detected")))
  ((string-equal system-type "darwin") ; Mac OS X
   (progn
-    (message "Mac OS X")))
+    (message "Mac OS X detected")))
  ((string-equal system-type "gnu/linux") ; linux
   (progn
-    (message "Linux"))))
+    (message "Linux detected"))))
 
 
 
@@ -89,6 +92,7 @@
 ;; Workgroups2                                                                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; https://github.com/pashinin/workgroups2/wiki/Configuration                            ;
+(message "Loading workgroups2")                                                          ;
                                                                                          ;
 (require 'workgroups2)                                                                   ;
                                                                                          ;
@@ -128,6 +132,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Global Key Settings                                                                  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(message "Loading global key settings")                                                  ;
                                                                                          ;
 ;; mit Crtl-TAB zum nächsten Window springen                                             ;
 (global-set-key [M-tab] 'other-window)                                                   ;
@@ -161,6 +166,7 @@
 ;; Smart Parens Minor Mode                                                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; https://www.emacswiki.org/emacs/EmacsLispMode                                         ;
+(message "Loading smartparens")                                                          ;
                                                                                          ;
 (require 'smartparens-config)                                                            ;
 (smartparens-global-mode)                                                                ;
@@ -175,6 +181,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; http://www.emacswiki.org/emacs/LineNumbers                                            ;
 ;; click on left margin (line number) to select whole line                               ;
+(message "Loading line-at-click")                                                        ;
+                                                                                         ;
 (defvar *linum-mdown-line* nil)                                                          ;
                                                                                          ;
 (defun line-at-click ()                                                                  ;
@@ -219,6 +227,7 @@
 ;; emacs-lisp-mode-hook (auch für init.el)                                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; more info: https://www.emacswiki.org/emacs/EmacsLispMode                              ;
+(message "Loading emacs-lisp-mode-hook")                                                 ;
                                                                                          ;
 (add-hook 'emacs-lisp-mode-hook                                                          ;
   (lambda () (linum-mode)                                                                ;
@@ -240,11 +249,22 @@
 
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Magit Settings                                                                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+					                                                 ;
+;https://github.com/magit/magit/issues/1615
+;(setq magit-diff-options (list "--word-diff=color"))
+
+                                                                                         ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LaTeX                                                                                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(message "Loading LaTeX specific settings")                                                   ;
                                                                                               ;
                                                                                               ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
