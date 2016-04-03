@@ -13,9 +13,9 @@
 # Last update: 2016-04-03
 #
 # This file is in a GIT repo on my NAS, cloned to '~/Documents/GIT/InitFiles/zshrc'
-# only put the following line into your .zshrc at '~/':
-# 'source ~/Documents/GIT/InitFiles/zshrc'
-#
+# Put only the following line into your .zshrc at '~/':
+# on the MacBook: 'source ~/Documents/GIT/InitFiles/zshrc'
+# on root@Diski:  'source /volume1/homes/sb/GIT/InitFiles/zshrc'
 
 
 #
@@ -333,26 +333,23 @@ alias man='nocorrect man'
 # my new aliases
 
 case $(uname -s) in
-    
     Darwin)
-	
 	# aliases to show/hide hidden files in MacOS finder 
 	alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
 	alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
-
 	alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
 	function finde () {tree --prune -aP $*;}
-
 	;;
-
     Linux)
- 
-	# alias to enter Debian-chroot at Diski
-	alias deb='/var/packages/debian-chroot/scripts/start-stop-status chroot .'
-	alias cdhome='/volume1/@appstore/debian-chroot/var/chroottarget/home'
-
+	case $OSTYPE in
+	    linux-gnueabi)
+		# alias to enter Debian-chroot at Diski
+		alias deb='/var/packages/debian-chroot/scripts/start-stop-status chroot .'
+		alias cdhome='/volume1/@appstore/debian-chroot/var/chroottarget/home'
+		;;
+	    linux-gnueabihf)
+		;;
 	;;
-
 esac
 
    
