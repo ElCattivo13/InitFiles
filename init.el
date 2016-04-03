@@ -15,8 +15,9 @@
 ;;       - Magit -> word-diff=color
 ;;
 ;;
-;; this init file is in a GIT repo and then loaded via
-;; (load "~/Documents/GIT/EmacsInit/init.el")
+;; this init file is in a GIT repo, put this as the first an only line into your local
+;; init.el at ~/.emacs.d/ :
+;; (load "~/Documents/GIT/InitFiles/init.el")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; General Setup                                                                        ;;
