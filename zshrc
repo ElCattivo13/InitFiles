@@ -349,6 +349,7 @@ case $(uname -s) in
 		;;
 	    linux-gnueabihf)
 		;;
+	esac
 	;;
 esac
 
