@@ -21,67 +21,82 @@
 #
 # Important environment variables
 #
- 
-  # Perl
-  #export PERL5LIB="/users/lat/lippmann/.perl/lib/perl5/"
-  #export LD_LIBRARY_PATH="/users/lat/lippmann/.perl/lib/:$LD_LIBRARY_PATH"
 
-  # LaTeX
-  export PATH=/usr/local/texlive/2013/bin/universal-darwin:/usr/local/texlive/2013/bin/x86_64-darwin:/opt/local/bin:$PATH
-  #export TEXINPUTS=".:/users/lat/lippmann/Documents/LaTeXInputs/:"
-  #export BIBINPUTS=".:/users/lat/lippmann/Documents/LaTeXInputs/:"
-  #export BSTINPUTS=".:/users/lat/lippmann/Documents/LaTeXInputs/:"
+case $(uname -s) in
+    Darwin) export DEBUG="Case1";;
+    Linux)  export DEBUG="Case2";;
+    *)      export DEBUG="Case3";;
+esac
 
-  # Terminal
-#  export TERM=xterm-256color
 
-  # switch to home by inputting 'cd'
-  export CDPATH="" #.:..:$HOME
+# SHELL
+export SHELL="/usr/local/bin/zsh"
 
-  # temp directory in home
-#  export TMPDIR=$HOME/.tmp
+# OS
+export OS=$(uname -s)
 
-  # gcc is standard compiler
-  export CC=gcc
+# Perl
+#export PERL5LIB="/users/lat/lippmann/.perl/lib/perl5/"
+#export LD_LIBRARY_PATH="/users/lat/lippmann/.perl/lib/:$LD_LIBRARY_PATH"
 
-  # set color
-  export COLORTERM=yes  
+# LaTeX
+export PATH=/usr/local/texlive/2013/bin/universal-darwin:/usr/local/texlive/2013/bin/x86_64-darwin:/opt/local/bin:$PATH
+#export TEXINPUTS=".:/users/lat/lippmann/Documents/LaTeXInputs/:"
+#export BIBINPUTS=".:/users/lat/lippmann/Documents/LaTeXInputs/:"
+#export BSTINPUTS=".:/users/lat/lippmann/Documents/LaTeXInputs/:"
 
-  # set editor, browser and pager
-  export EDITOR=vim
-  export PAGER=less
-  export BROWSER=firefox
-  export TEXTBROWSER=links
+# Terminal
+#export TERM=xterm-256color
+
+# switch to home by inputting 'cd'
+export CDPATH="" #.:..:$HOME
+
+# temp directory in home
+#export TMPDIR=$HOME/.tmp
+
+# gcc is standard compiler
+export CC=gcc
+
+# set color
+export COLORTERM=yes
+#bei Diski urspruenglish auskommentiert
+
+# set editor, browser and pager
+export EDITOR=emacs
+export PAGER=less
+export BROWSER=firefox
+export TEXTBROWSER=links
+
+# less options: skipscreenwhensearching,clear,ic,longprompt
+#export LESS=aCiM
+#export LESS=
+
+# set language to English
+export LC_C=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
+
+# 30 directories can be pushed onto the stack. After every
+# 'cd' the current directory is pushed onto the stack.
+# The option 'auto_cd' should be set in order to get this
+# performed.
+#
+# Show the directories with 'd' (alias to 'dirs -v'),
+# change direcotry with 'cd +number'.
+DIRSTACKSIZE=30
+
+# History
   
-  # less options: skipscreenwhensearching,clear,ic,longprompt
-  #export LESS=aCiM
-  #export LESS=
+  # size of history
+  HISTSIZE=2000
+  # maximal amount of entries to save
+  SAVEHIST=2000
+  # save history in:
+  HISTFILE=~/.zsh_history
 
-  # set language to English
-  export LC_C=en_US.UTF-8
-  export LC_ALL=en_US.UTF-8
-  export LC_CTYPE=en_US.UTF-8
 
-  # 30 directories can be pushed onto the stack. After every
-  # 'cd' the current directory is pushed onto the stack.
-  # The option 'auto_cd' should be set in order to get this
-  # performed.
-  #
-  # Show the directories with 'd' (alias to 'dirs -v'),
-  # change direcotry with 'cd +number'.
-  DIRSTACKSIZE=30
-
-  # History
-  
-    # size of history
-    HISTSIZE=2000
-    # maximal amount of entries to save
-    SAVEHIST=2000
-    # save history in:
-    HISTFILE=~/.zsh_history
-
-  # Colors used bei 'ls' and completions
-  export LS_COLORS='no=0:fi=0:di=32:ln=36:or=1;40:mi=1;40:pi=31:so=33:bd=44;37:cd=44;37:ex=35:*.jpg=1;32:*.jpeg=1;32:*.JPG=1;32:*.gif=1;32:*.png=1;32:*.jpeg=1;32:*.ppm=1;32:*.pgm=1;32:*.pbm=1;32:*.c=1;33:*.C=1;33:*.h=1;33:*.cc=1;33:*.awk=1;33:*.pl=1;33:*.bz2=1;35:*.gz=1;31:*.tar=1;31:*.zip=1;31:*.lha=1;31:*.lzh=1;31:*.arj=1;31:*.tgz=1;31:*.taz=1;31:*.html=1;34:*.htm=1;34:*.doc=1;34:*.txt=1;34:*.o=1;36:*.a=1;36:*.php3=1;31'
+# Colors used bei 'ls' and completions
+export LS_COLORS='no=0:fi=0:di=32:ln=36:or=1;40:mi=1;40:pi=31:so=33:bd=44;37:cd=44;37:ex=35:*.jpg=1;32:*.jpeg=1;32:*.JPG=1;32:*.gif=1;32:*.png=1;32:*.jpeg=1;32:*.ppm=1;32:*.pgm=1;32:*.pbm=1;32:*.c=1;33:*.C=1;33:*.h=1;33:*.cc=1;33:*.awk=1;33:*.pl=1;33:*.bz2=1;35:*.gz=1;31:*.tar=1;31:*.zip=1;31:*.lha=1;31:*.lzh=1;31:*.arj=1;31:*.tgz=1;31:*.taz=1;31:*.html=1;34:*.htm=1;34:*.doc=1;34:*.txt=1;34:*.o=1;36:*.a=1;36:*.php3=1;31'
 
 
 #
@@ -101,16 +116,13 @@
 # functions for xterm title
 #
   
-  # check whether the $TERM is an xterm or Eterm
-  case $TERM in
+# check whether the $TERM is an xterm or Eterm
+case $TERM in
     xterm*|Eterm|rxvt*)
-	  	  
-		precmd () { print -Pn "\e]0;${USER}@${HOST}: %4~\a" }
-
-		preexec () { print -Pn "\e]0;${USER}@${HOST}: $1\a" }
-	  
-	  ;;
-  esac
+	precmd () { print -Pn "\e]0;${USER}@${HOST}: %4~\a" }
+	preexec () { print -Pn "\e]0;${USER}@${HOST}: $1\a" }
+	;;
+esac
 
 #
 # Options
@@ -213,116 +225,137 @@ NO_xtrace \
 # 'alias' pwnz!
 #
 
-  # shortcuts of 'alias' and 'unalias' -- ought to be useful ^^
-  alias a=alias
-  alias ua=unalias
+# shortcuts of 'alias' and 'unalias' -- ought to be useful ^^
+alias a=alias
+alias ua=unalias
 
-  # showing the CPU temperature
+# showing the CPU temperature
 #  alias cputemp='cat /proc/acpi/thermal_zone/THM/temperature'
 
-  # job control (1): bring fast to foreground
-  alias  1='fg %1'
-  alias  2='fg %2'
-  alias  3='fg %3'
-  alias  4='fg %4'
-  alias  5='fg %5'
-  alias  6='fg %6'
+# job control (1): bring fast to foreground
+alias  1='fg %1'
+alias  2='fg %2'
+alias  3='fg %3'
+alias  4='fg %4'
+alias  5='fg %5'
+alias  6='fg %6'
 
-  # job control (2): bring fast to background
-  alias 11='bg %1'
-  alias 22='bg %2'
-  alias 33='bg %3'
-  alias 44='bg %4'
-  alias 55='bg %5'
-  alias 66='bg %6'
+# job control (2): bring fast to background
+alias 11='bg %1'
+alias 22='bg %2'
+alias 33='bg %3'
+alias 44='bg %4'
+alias 55='bg %5'
+alias 66='bg %6'
 
-  # show all jobs
-  alias  j='jobs -l'
+# show all jobs
+alias  j='jobs -l'
   
-  # show all processes as tree -- bsd syntax
-  alias px='ps aufx'
+# show all processes as tree -- bsd syntax
+alias px='ps aufx'
 
-  # change directory upwards very fast -- very useful
-  alias    ..='cd ..'
-  alias   ...='cd ../..'
-  alias  ....='cd ../../..'
-  alias .....='cd ../../../..'
+# change directory upwards very fast -- very useful
+alias    ..='cd ..'
+alias   ...='cd ../..'
+alias  ....='cd ../../..'
+alias .....='cd ../../../..'
 
-  # show directory stack
-  alias d='dirs -v'
+# show directory stack
+alias d='dirs -v'
 
-  # list the last ten new files/directories
-  alias lsnew='ls -rtl *(.) | tail'
-  alias lsnewdir='ls -rtl | tail'
+# list the last ten new files/directories
+alias lsnew='ls -rtl *(.) | tail'
+alias lsnewdir='ls -rtl | tail'
   
-  # list the last ten old files/directories
-  alias lsold='ls  -tl *(.) | tail'
-  alias lsolddir='ls  -tl | tail'
+# list the last ten old files/directories
+alias lsold='ls  -tl *(.) | tail'
+alias lsolddir='ls  -tl | tail'
 
-  # change rights -- secure!
-  alias rwx='chmod 700'
-  alias rw-='chmod 600'
-  alias r-x='chmod 500'
-  alias r--='chmod 400'
+# change rights -- secure!
+alias rwx='chmod 700'
+alias rw-='chmod 600'
+alias r-x='chmod 500'
+alias r--='chmod 400'
 
-  # important 'ls' shortcuts -- very, very useful!
+# important 'ls' shortcuts -- very, very useful!
   
-    # use $LS_COLORS with 'ls'
-    alias ls='ls -F -G'
-    
-	# show all - with dotfiles and human readable
-	alias la='ls -lah'
+  # use $LS_COLORS with 'ls'
+  case $(uname -s) in
+      Darwin)  alias ls='ls -F -G';;
+      Linux)   alias ls='ls -F --color=auto';;
+  esac
 
-	# show contents as list and human readable
-    alias ll='ls -lh'
+  # show all - with dotfiles and human readable
+  alias la='ls -lah'
 
-    # show directory and not contents
-    alias lsd='ls -d'
-
-	# show direcory and not contents as list
-	alias lld='ll -d'
+  # show contents as list and human readable
+  alias ll='ls -lh'
+  
+  # show directory and not contents
+  alias lsd='ls -d'
+  
+  # show direcory and not contents as list
+  alias lld='ll -d'
 
   # show disk usage
   alias esu='du --max-depth=1 | sort -n | sed "s/^.*\t//"'
   alias use='du -h --max-depth=0 `esu`'
 
-  # grep -- very, very often used!
+# grep -- very, very often used!
 
-    # show matches red and search case insensitively
-	alias grep='grep -i --color=auto'
-	alias fgrep='fgrep -i --color=auto'
-	alias egrep='egrep -i --color=auto'
+  # show matches red and search case insensitively
+  alias grep='grep -i --color=auto'
+  alias fgrep='fgrep -i --color=auto'
+  alias egrep='egrep -i --color=auto'
 
-  # clear screen
-  alias cl='clear'
+# clear screen
+alias cl='clear'
 
-  # burn iso
-  alias burn-iso='cdrecord -v -dao dev=0,1,0 speed=24'
+# burn iso
+alias burn-iso='cdrecord -v -dao dev=0,1,0 speed=24'
 
-  # make directory (includes parent(s), no errors)
-  alias md='mkdir -p'
+# make directory (includes parent(s), no errors)
+alias md='mkdir -p'
 
-  # .zshrc aliases -- wow!
+# .zshrc aliases -- wow!
 
-    # edit .zshrc
-    alias  __='$EDITOR ~/.zshrc'
+  # edit .zshrc
+  alias  __='$EDITOR ~/.zshrc'
 
-	# use new .zshrc
-    alias ___='source  ~/.zshrc'
+  # use new .zshrc
+  alias ___='source  ~/.zshrc'
 
-  # sudo/man fix
-  alias sudo='nocorrect sudo'
-  alias man='nocorrect man'
+# sudo/man fix
+alias sudo='nocorrect sudo'
+alias man='nocorrect man'
 
-  
-  # aliases to show/hide hidden files in MacOS finder 
-  alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
-  alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
 
-  alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
+# my new aliases
 
-  function finde () {tree --prune -aP $*;}
+case $(uname -s) in
+    
+    Darwin)
+	
+	# aliases to show/hide hidden files in MacOS finder 
+	alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
+	alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
 
+	alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
+	function finde () {tree --prune -aP $*;}
+
+	;;
+
+    Linux)
+ 
+	# alias to enter Debian-chroot at Diski
+	alias deb='/var/packages/debian-chroot/scripts/start-stop-status chroot .'
+	alias cdhome='/volume1/@appstore/debian-chroot/var/chroottarget/home'
+
+	;;
+
+esac
+
+   
 
 #
 # Modules
