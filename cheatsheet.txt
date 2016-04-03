@@ -29,3 +29,20 @@ DSM bei Updates überschrieben wird und dann alles weg ist
 
 
 
+** Git Remote wechseln **
+
+Situation: lokale Kopie ist noch da, aber der Remote ist nicht
+erreichbar oder gelöscht (wie z.B. /root/bare/...)
+
+Was ich will: lokale Kopie zu einem anderen Repo kopieren
+
+Wie:
+1. zur lokalen Kopie wechseln und neues Repo hinzufügen
+   'git remote add new-origin ssh://Diski/volume1/homes/sb/GIT-bare/NewRepo.git'
+
+2. 'git pull new-origin master'
+
+3. 'git push --all new-origin'
+
+4. 'git push --tags new-origin'
+
