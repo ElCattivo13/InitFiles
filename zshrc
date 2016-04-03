@@ -16,7 +16,7 @@
 # Put only the following line into your .zshrc at '~/':
 # on the MacBook: 'source ~/Documents/GIT/InitFiles/zshrc'
 # on root@Diski:  'source /volume1/homes/sb/GIT/InitFiles/zshrc'
-
+# on root@Diski-chroot: 'source /home/zshrc'
 
 #
 # Important environment variables
