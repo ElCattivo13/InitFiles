@@ -16,7 +16,10 @@ DSM bei Updates überschrieben wird und dann alles weg ist
 - auf lokalem Rechner dahinwechseln wo das Repo geklont werden soll
 - mit 'git clone ssh://Diski/volume1/homes/sb/GIT-bare/NewRepo.git'
     das Repo klonen
-
+- der erste Commit und der erste Push ist oft etwas schwierig. Am
+    besten immer vom Terminal aus, klappt nicht immer sofort, beim
+    Probieren musste ich erst unset-upstream und dann set-upstream
+    beim Pushen nutzen, aber mit GIT Kommentaren geht das.
 
 
 
