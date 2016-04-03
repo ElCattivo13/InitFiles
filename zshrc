@@ -335,8 +335,10 @@ alias man='nocorrect man'
 case $(uname -s) in
     Darwin)
 	# aliases to show/hide hidden files in MacOS finder 
-	alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
-	alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
+	alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES;
+                         killall Finder /System/Library/CoreServices/Finder.app'
+	alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO;
+                         killall Finder /System/Library/CoreServices/Finder.app'
 	alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
 	function finde () {tree --prune -aP $*;}
 	;;
@@ -350,6 +352,7 @@ case $(uname -s) in
                                     git pull;
                                     cp zshrc /volume1/@appstore/debian-chroot/var/chroottarget/home/zshrc;
                                     cd'
+		alias openvpn-log='tail -f /var/log/openvpn.log'
 		;;
 	    linux-gnueabihf)
 		alias mytest='echo TEST'
