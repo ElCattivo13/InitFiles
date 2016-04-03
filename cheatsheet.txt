@@ -1,0 +1,22 @@
+Da ich mir die SAchen immer nicht merken kann, die ich irgendwann mal
+mache, versuche ich alles bezüglich meines privaten GITs zu
+dokumentieren.
+
+1. Sehr schlechte Idee das Repo bei /root/bare zu haben, da /root von
+DSM bei Updates überschrieben wird und dann alles weg ist
+
+
+** GIT Repo erstellen **
+
+
+- per ssh auf Diski einloggen und zu /volume1/homes/sb/ wechseln
+- auf /volume1/homes/sb ein Ordner für bare GIT Repos erstellen
+- mit 'git init --bare --shared NewRepo.git' das neue Repo erstellen
+
+- auf lokalem Rechner dahinwechseln wo das Repo geklont werden soll
+- mit 'git clone ssh://Diski/volume1/homes/sb/GIT-bare/NewRepo.git'
+    das Repo klonen
+
+
+
+
