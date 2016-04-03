@@ -21,5 +21,11 @@ DSM bei Updates überschrieben wird und dann alles weg ist
     Probieren musste ich erst unset-upstream und dann set-upstream
     beim Pushen nutzen, aber mit GIT Kommentaren geht das.
 
+- mit neuem Magit in Emacs: normal stagen und commiten, dann mit 'P u'
+    zum Upstream pushen
+
+
+
+
 
 
