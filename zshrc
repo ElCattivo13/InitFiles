@@ -345,9 +345,14 @@ case $(uname -s) in
 	    linux-gnueabi)
 		# alias to enter Debian-chroot at Diski
 		alias deb='/var/packages/debian-chroot/scripts/start-stop-status chroot .'
-		alias cdhome='/volume1/@appstore/debian-chroot/var/chroottarget/home'
+		alias cd-chroothome='/volume1/@appstore/debian-chroot/var/chroottarget/home'
+		alias update-zshrc='cd /volume1/homes/sb/GIT/InitFiles;
+                                    git pull;
+                                    cp zshrc /volume1/@appstore/debian-chroot/var/chroottarget/home/zshrc;
+                                    cd'
 		;;
 	    linux-gnueabihf)
+		alias mytest='echo TEST'
 		;;
 	esac
 	;;
