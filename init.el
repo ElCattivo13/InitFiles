@@ -47,7 +47,6 @@
     (message "Linux detected"))))
 
 
-
 ;; add /usr/texbin to PATH, so LaTeX compile works within Emacs
 (setenv "PATH" 
   (concat (getenv "PATH")
