@@ -425,6 +425,8 @@
 	 ("T" ("true"))                                                                  ;    ;
 	 ("F" ("false"))                                                                 ;    ;
 	 ("|" ("concat"))                                                                ;    ;
+	 ("~" ("negnnf"))                                                                ;    ;
+	 ("¬" ("lnot"))                                                                  ;    ;
         ) LaTeX-fold-math-spec-list))                                                    ;    ;
     (setq LaTeX-fold-macro-spec-list                                                     ;    ;
       (append                                                                            ;    ;
