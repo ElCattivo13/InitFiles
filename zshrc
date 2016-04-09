@@ -373,9 +373,15 @@ esac
   promptinit
 
   #prompt suse
-  export PS1='%(?::%F{red}[%?] )%F{green}[%*] %F{cyan}%n@%m %4~> %f'
-
-    
+  case $OSTYPE in
+      linux-gnueabihf)
+	  export PS1='%(?::%F{red}[%?] )%F{green}[%*] %F{cyan}%n@%m-chroot %4~> %f'
+	  ;;
+      *)
+	  export PS1='%(?::%F{red}[%?] )%F{green}[%*] %F{cyan}%n@%m %4~> %f'
+	  ;;
+  esac
+  
 #
 # Completions
 #
