@@ -357,6 +357,7 @@ case $(uname -s) in
 		;;
 	    linux-gnueabihf)
 		alias mytest='echo TEST'
+		alias password-backup='~/.scripts/password-backup.sh'
 		;;
 	esac
 	;;
