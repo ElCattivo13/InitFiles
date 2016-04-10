@@ -46,3 +46,41 @@ Wie:
 
 4. 'git push --tags new-origin'
 
+
+
+
+
+
+
+
+
+** Neuer SSH Login auf Diski **
+
+Situation: Zur Zeit ist nur root-Login als ssh auf Diski möglich, auch
+für sb einrichten
+Quellen: https://forum.synology.com/enu/viewtopic.php?t=72348
+http://pellelatarte.fr/2011/03/le-ssh-pour-tous-les-utilisateurs-sur-les-nas-synology/
+
+1. on local machine: create directory
+      md .ssh/idents/Diski-sb
+
+2. run:
+      ssh-keygen -t rsa -b 4096
+        -> Enter file ...: /Users/boehme/.ssh/idents/Diski-sb/id_rsa
+
+3. ssh as root into Diski:
+      md /volume1/homes/sb/.ssh
+
+4. on local machine:
+      scp ~/.ssh/idents/Diski-sb/id_rsa.pub  Diski:/volume1/homes/sb/.ssh
+
+5. on NAS in .../homes/sb/.ssh
+      mv id_rsa.pub authorized_keys
+
+6. on local machine: edit .ssh/config
+               -> neuer Host -> User sb
+	                     -> Identity File ~/.ssh/idnets/Diski-sb/id_rsa
+
+7. Der französischen Anleitung folgen (mit google translate)
+
+8. Am Ende noch "chmod 600 authorized_keys" in /volume1/homes/sb/.ssh
