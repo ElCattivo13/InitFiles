@@ -19,11 +19,12 @@ start_daemon ()
     # Mount if install is finished
     if [ -f ${INSTALL_DIR}/var/installed ]; then
         # Make sure we don't mount twice
-        grep -q "${CHROOTTARGET}/proc " /proc/mounts || mount -t proc proc ${CHROOTTARGET}/proc
-        grep -q "${CHROOTTARGET}/sys " /proc/mounts || mount -t sysfs sys ${CHROOTTARGET}/sys
-        grep -q "${CHROOTTARGET}/dev " /proc/mounts || mount -o bind /dev ${CHROOTTARGET}/dev
+	grep -q "${CHROOTTARGET}/proc "    /proc/mounts || mount -t proc proc ${CHROOTTARGET}/proc
+        grep -q "${CHROOTTARGET}/sys "     /proc/mounts || mount -t sysfs sys ${CHROOTTARGET}/sys
+        grep -q "${CHROOTTARGET}/dev "     /proc/mounts || mount -o bind /dev ${CHROOTTARGET}/dev
         grep -q "${CHROOTTARGET}/dev/pts " /proc/mounts || mount -o bind /dev/pts ${CHROOTTARGET}/dev/pts
-        grep -q "${CHROOTTARGET}/home " `realpath /var/services/homes` || mount -o bind `realpath /var/services/homes` ${CHROOTTARGET}/home
+        grep -q "${CHROOTTARGET}/home "    /proc/mounts || mount -o bind `realpath /var/services/homes` ${CHROOTTARGET}/home
+        grep -q "${CHROOTTARGET}/volume1"  /proc/mounts || mount -o bind /volume1 ${CHROOTTARGET}/volume1
 
         # Start all services
         ${INSTALL_DIR}/app/start.py
@@ -41,6 +42,7 @@ stop_daemon ()
     umount ${CHROOTTARGET}/sys
     umount ${CHROOTTARGET}/proc
     umount ${CHROOTTARGET}/home
+    umount ${CHROOTTARGET}/volume1
 }
 
 daemon_status ()
