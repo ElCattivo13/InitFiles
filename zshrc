@@ -377,7 +377,7 @@ esac
 	  export PS1='%(?::%F{red}[%?] )%F{green}[%*] %F{cyan}%n@%m-chroot %4~> %f'
 	  ;;
       linux-androideabi)
-	  export PS1='%(?::%F{red}[%?] )%F{green}[%T] %F{cyan} %1~> %f'
+	  export PS1='%(?::%F{red}[%?] )%F{green}[%T]%F{cyan} %1~> %f'
 	  ;;
       *)
 	  export PS1='%(?::%F{red}[%?] )%F{green}[%*] %F{cyan}%n@%m %4~> %f'
