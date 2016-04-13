@@ -348,11 +348,12 @@ case $(uname -s) in
 		# alias to enter Debian-chroot at Diski
 		alias deb='/var/packages/debian-chroot/scripts/start-stop-status chroot .'
 		alias cd-chroothome='/volume1/@appstore/debian-chroot/var/chroottarget/home'
-		alias update-zshrc='git pull /volume1/homes/sb/GIT/InitFiles'
+		alias update-zshrc='(cd /volume1/homes/sb/GIT/InitFiles; git pull)'
 		alias openvpn-log='tail -f /var/log/openvpn.log'
 		;;
 	    linux-gnueabihf)
 		alias password-backup='/volume1/homes/sb/.scripts/password-backup.sh'
+		alias update-zshrc='(cd /volume1/homes/sb/GIT/InitFiles; git pull)'
 		;;
 	    linux-androideabi)
 		alias update-zshrc='(cd ~/storage/InitFiles; git pull)'
