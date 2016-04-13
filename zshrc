@@ -355,7 +355,7 @@ case $(uname -s) in
 		alias password-backup='/volume1/homes/sb/.scripts/password-backup.sh'
 		;;
 	    linux-androideabi)
-		alias update-zshrc='git pull ~/storage/InitFiles'
+		alias update-zshrc='(cd ~/storage/InitFiles; git pull)'
 	esac
 	;;
 esac
