@@ -29,7 +29,6 @@ case $(uname -s) in
 esac
 
 
-
 # SHELL
 export SHELL="/usr/local/bin/zsh"
 
