@@ -333,6 +333,8 @@ alias man='nocorrect man'
 
 # my new aliases
 
+alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
+
 case $(uname -s) in
     Darwin)
 	# aliases to show/hide hidden files in MacOS finder 
