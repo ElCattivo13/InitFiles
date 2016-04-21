@@ -309,6 +309,8 @@
     (save-buffer)                                                                        ;    ;
     (TeX-fold-buffer)                                                                    ;    ;
     (TeX-command-master)                                                                 ;    ;
+    (set-process-query-on-exit-flag (get-process "latexmk") nil)                         ;    ;
+    ;(TeX-recenter-output-buffer)                                                         ;    ;
 )                                                                                        ;    ;
                                                                                          ;    ;
 ;; Bind keys in LaTeX mode                                                               ;    ;
