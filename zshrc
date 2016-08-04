@@ -354,6 +354,7 @@ case $(uname -s) in
 		alias cd-chroothome='/volume1/@appstore/debian-chroot/var/chroottarget/home'
 		alias update-zshrc='(cd /volume1/homes/sb/GIT/InitFiles; git pull)'
 		alias openvpn-log='tail -f /var/log/openvpn.log'
+		alias kontakte='psql -U postgres caldav -c "select vcard_text from addressbook_object"'
 		;;
 	    linux-gnueabihf)
 		alias password-backup='/volume1/homes/sb/.scripts/password-backup.sh'
