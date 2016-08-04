@@ -324,6 +324,10 @@
                                                                                          ;    ;
 (add-hook 'LaTeX-mode-hook 'latex-my-bindings)                                           ;    ;
                                                                                          ;    ;
+(add-hook 'TeX-output-mode-hook
+    (lambda ()
+      (define-key TeX-special-mode-map (kbd "M-SPC") 'end-of-buffer)
+      (define-key TeX-special-mode-map (kbd "SPC")   'scroll-down-command)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
                                                                                               ;
                                                                                               ;
