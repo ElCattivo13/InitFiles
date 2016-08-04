@@ -343,6 +343,7 @@ case $(uname -s) in
 	alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO;
                          killall Finder /System/Library/CoreServices/Finder.app'
 	alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
+	alias protege='Applications/Protege_5.0_beta/run.command'
 	function finde () {tree --prune -aP $*;}
 	;;
     Linux)
