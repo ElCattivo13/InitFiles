@@ -334,6 +334,7 @@ alias man='nocorrect man'
 # my new aliases
 
 alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
+alias findDuplicates='find . ! -readable -prune -not -empty -type f -printf "%s\n" | sort -rn | uniq -d | xargs -I{} -n1 find -type f -size {}c -print0 | xargs -0 md5sum | sort | uniq -w32 --all-repeated=separate'
 
 case $(uname -s) in
     Darwin)
@@ -343,7 +344,7 @@ case $(uname -s) in
 	alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO;
                          killall Finder /System/Library/CoreServices/Finder.app'
 	alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
-	alias protege='Applications/Protege_5.0_beta/run.command'
+	alias protege='/Applications/Protege_5.0_beta/run.command'
 	function finde () {tree --prune -aP $*;}
 	;;
     Linux)
