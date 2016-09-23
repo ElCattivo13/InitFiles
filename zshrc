@@ -364,7 +364,7 @@ case $(uname -s) in
 		alias ssh-status='/etc/init.d/ssh status'
 		;;
 	    linux-androideabi)
-		alias update-zshrc='(cd ~/storage/InitFiles; git pull)'
+		alias update-zshrc='(cd /storage/3665-6533/Android/data/com.termux/files/InitFiles; git pull)'
 	esac
 	;;
 esac
