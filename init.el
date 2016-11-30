@@ -88,24 +88,32 @@
 
 
 
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Workgroups2                                                                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; https://github.com/pashinin/workgroups2/wiki/Configuration                            ;
-(message "Loading workgroups2")                                                          ;
+
+;; only when opened as App
+(when (display-graphic-p)
+  
+  (message "Loading workgroups2")                                                          ;
                                                                                          ;
-(require 'workgroups2)                                                                   ;
+  (require 'workgroups2)                                                                   ;
                                                                                          ;
-;; Change prefix key (before activating WG)                                              ;
-(setq wg-prefix-key (kbd "C-z"))                                                         ;
-(setq wg-session-file "~/.emacs.d/myworkgroups.wg")                                      ;
-(setq wg-session-load-on-start t)                                                        ;
+  ;; Change prefix key (before activating WG)                                              ;
+  (setq wg-prefix-key (kbd "C-z"))                                                         ;
+  (setq wg-session-file "~/.emacs.d/myworkgroups.wg")                                      ;
+  (setq wg-session-load-on-start t)                                                        ;
                                                                                          ;
-;; What to do on Emacs exit / workgroups-mode exit?                                      ;
-(setq wg-emacs-exit-save-behavior           'save)      ; Options: 'save 'ask nil        ;
-(setq wg-workgroups-mode-exit-save-behavior 'save)      ; Options: 'save 'ask nil        ;
+  ;; What to do on Emacs exit / workgroups-mode exit?                                      ;
+  (setq wg-emacs-exit-save-behavior           'save)      ; Options: 'save 'ask nil        ;
+  (setq wg-workgroups-mode-exit-save-behavior 'save)      ; Options: 'save 'ask nil        ;
 					;
-(add-hook 'workgroups-mode-hook 'wg-reload-session)
+  (add-hook 'workgroups-mode-hook 'wg-reload-session)
+)
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -310,7 +318,7 @@
     (TeX-fold-buffer)                                                                    ;    ;
     (TeX-command-master)                                                                 ;    ;
     (set-process-query-on-exit-flag (get-process "latexmk") nil)                         ;    ;
-    ;(TeX-recenter-output-buffer)                                                         ;    ;
+    ;(TeX-recenter-output-buffer)                                                        ;    ;
 )                                                                                        ;    ;
                                                                                          ;    ;
 ;; Bind keys in LaTeX mode                                                               ;    ;
@@ -503,27 +511,30 @@
 ;; Synctex with Skim                                                                    ;;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
                                                                                          ;    ;
-;; make latexmk available via C-c C-c                                                    ;    ;
-;; Note: SyncTeX is setup via ~/.latexmkrc (see below)                                   ;    ;
-(add-hook 'LaTeX-mode-hook (lambda ()                                                    ;    ;
-  (push                                                                                  ;    ;
-   '("latexmk" "latexmk -pdf %s" TeX-run-TeX nil t                                       ;    ;
-     :help "Run latexmk on file")                                                        ;    ;
-   TeX-command-list)))                                                                   ;    ;
-(add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))              ;    ;
+;; only when opened as App                                                               ;    ;
+(when (display-graphic-p)                                                                ;    ;
                                                                                          ;    ;
-;; use Skim as default pdf viewer                                                        ;    ;
-;; Skim's displayline is used for forward search (from .tex to .pdf)                     ;    ;
-;; option -b highlights the current line; option -g opens Skim in the background         ;    ;
-(setq TeX-view-program-selection '((output-pdf "PDF Viewer")))                           ;    ;
-(setq TeX-view-program-list                                                              ;    ;
-  '(("PDF Viewer"                                                                        ;    ;
-     ;"/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b"         ;    ;
-     "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o %b"             ;    ;
-     )))                                                                                 ;    ;
+  ;; make latexmk available via C-c C-c                                                  ;    ;
+  ;; Note: SyncTeX is setup via ~/.latexmkrc (see below)                                 ;    ;
+  (add-hook 'LaTeX-mode-hook (lambda ()                                                  ;    ;
+    (push                                                                                ;    ;
+     '("latexmk" "latexmk -pdf %s" TeX-run-TeX nil t                                     ;    ;
+       :help "Run latexmk on file")                                                      ;    ;
+     TeX-command-list)))                                                                 ;    ;
+  (add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))            ;    ;
                                                                                          ;    ;
-(server-start); start emacs in server mode so that skim can talk to it                   ;    ;
+  ;; use Skim as default pdf viewer                                                      ;    ;
+  ;; Skim's displayline is used for forward search (from .tex to .pdf)                   ;    ;
+  ;; option -b highlights the current line; option -g opens Skim in the background       ;    ;
+  (setq TeX-view-program-selection '((output-pdf "PDF Viewer")))                         ;    ;
+  (setq TeX-view-program-list                                                            ;    ;
+    '(("PDF Viewer"                                                                      ;    ;
+       ;"/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b"       ;    ;
+       "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o %b"           ;    ;
+       )))                                                                               ;    ;
                                                                                          ;    ;
+  (server-start); start emacs in server mode so that skim can talk to it                 ;    ;
+)                                                                                        ;    ;
                                                                                          ;    ;
 ;;;; For reference, here my .latexmkrc                                                   ;    ;
 ;; # my latexmk configuration file - last update: 2016-03-13                             ;    ;
@@ -556,8 +567,9 @@
 ;; Workgroups                                                                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(workgroups-mode 1)        ; put this one at the bottom of .emacs
-
+(when (display-graphic-p)
+  (workgroups-mode 1)        ; put this one at the bottom of .emacs
+)
 
 
 
