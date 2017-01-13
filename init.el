@@ -388,27 +388,11 @@
 ;; RefTeX                                                                               ;;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
                                                                                          ;    ;
-;; NOT WORKING YET
-(add-hook 'LaTeX-mode-hook (lambda () (turn-on-reftex)))
-(setq reftex-plug-into-AUCTeX t)
-
-;; http://tex.stackexchange.com/questions/54739/reftex-wont-find-my-bib-file-in-local-library-tree
-;; So that RefTeX finds my bibliography
-;(setq reftex-default-bibliography '("~/texmf/bibtex/bib/bibdeskbibliography.bib"))
-(setq reftex-default-bibliography '("./*.bib"))
-
-;; So that RefTeX also recognizes \addbibresource. 
-(setq reftex-bibliography-commands '("bibliography"
-				     "nobibliography"
-				     "addbibresource"))
-
-;; (setq reftex-use-external-file-finders t)
-;; (setq reftex-external-file-finders
-;;       '(("tex" . "kpsewhich -format=.tex %f")
-;;         ("bib" . "kpsewhich -format=.bib %f")))
-;; (setq reftex-default-bibliography
-;;       (quote
-;;        ("default.bib" "other-default.bib")))
+(add-hook 'LaTeX-mode-hook (lambda () (turn-on-reftex)))                                 ;    ;
+(setq reftex-plug-into-AUCTeX t)                                                         ;    ;
+                                                                                         ;    ;
+; Status quo: \addbibresource in main.tex wird erkannt, falls die bib über preamble.sty  ;    ;
+; geladen wird, muss local variable gesetzt werden                                       ;    ;
                                                                                          ;    ;
                                                                                          ;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
