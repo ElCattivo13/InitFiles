@@ -49,15 +49,13 @@
 
 
 ;; add /usr/texbin to PATH, so LaTeX compile works within Emacs
-(setenv "PATH" 
+(setenv "PATH" 				
   (concat (getenv "PATH")
 	  ":/usr/texbin"
-	  ":/usr/local/texlive/2013/bin/universal-darwin"
-	  ":/usr/local/texlive/2013/bin/x86_64-darwin"))
+	  ":/usr/local/texlive/2013/bin/universal-darwin"))
 
-(setq exec-path
-  (append exec-path
-   '("/usr/texbin")))
+(add-to-list 'exec-path "/usr/texbin")
+(add-to-list 'exec-path "/usr/local/texlive/2013/bin/universal-darwin")
 
 
 ;; turn off any sound in Emacs
@@ -84,51 +82,52 @@
 
 
 ;; Always update buffer when associated file changes on disk
-(global-auto-revert-mode t)
+;(global-auto-revert-mode t)
 
 
+;; Enter debug mode when error is encountered
+;(setq debug-on-error t)
 
-
-
+;; No scroll bars
+(scroll-bar-mode -1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Workgroups2                                                                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; https://github.com/pashinin/workgroups2/wiki/Configuration                            ;
-
-;; only when opened as App
-(when (display-graphic-p)
-  
-  (message "Loading workgroups2")                                                          ;
                                                                                          ;
-  (require 'workgroups2)                                                                   ;
+;; only when opened as App                                                               ;
+(when (display-graphic-p)                                                                ;
                                                                                          ;
-  ;; Change prefix key (before activating WG)                                              ;
-  (setq wg-prefix-key (kbd "C-z"))                                                         ;
-  (setq wg-session-file "~/.emacs.d/myworkgroups.wg")                                      ;
-  (setq wg-session-load-on-start t)                                                        ;
+  (message "Loading workgroups2")                                                        ;
                                                                                          ;
-  ;; What to do on Emacs exit / workgroups-mode exit?                                      ;
-  (setq wg-emacs-exit-save-behavior           'save)      ; Options: 'save 'ask nil        ;
-  (setq wg-workgroups-mode-exit-save-behavior 'save)      ; Options: 'save 'ask nil        ;
-					;
-  (add-hook 'workgroups-mode-hook 'wg-reload-session)
-)
+  (require 'workgroups2)                                                                 ;
+                                                                                         ;
+  ;; Change prefix key (before activating WG)                                            ;
+  (setq wg-prefix-key (kbd "C-z"))                                                       ;
+  (setq wg-session-file "~/.emacs.d/myworkgroups.wg")                                    ;
+  (setq wg-session-load-on-start t)                                                      ;
+                                                                                         ;
+  ;; What to do on Emacs exit / workgroups-mode exit?                                    ;
+  (setq wg-emacs-exit-save-behavior           'save)      ; Options: 'save 'ask nil      ;
+  (setq wg-workgroups-mode-exit-save-behavior 'save)      ; Options: 'save 'ask nil      ;
+                                                                                         ;
+  (add-hook 'workgroups-mode-hook 'wg-reload-session)                                    ;
+)                                                                                        ;
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Color settings                                                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					                                                 ;
-;(require 'color-theme-sanityinc-tomorrow)
-
-;(load-theme 'DarkLaTeXColorTheme t)                                                      ;
-                                                                                         ;
-                                                                                         ;
+(require 'color-theme-sanityinc-tomorrow)                                                ;
+(load-theme 'sanityinc-tomorrow-night t)                                                 ;
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -137,7 +136,7 @@
 (message "Loading global key settings")                                                  ;
                                                                                          ;
 ;; mit Crtl-TAB zum nächsten Window springen                                             ;
-(global-set-key [M-tab] 'other-window)                                                   ;
+;(global-set-key [M-tab] 'other-window)                                                  ;
                                                                                          ;
 ;; mit "Drucken" magit-status öffnen                                                     ;
 (global-set-key [f13] 'magit-status)                                                     ;
@@ -155,10 +154,10 @@
 ;; set ZShell as default                                                                 ;
 ;(setq  explicit-shell-file-name '"/bin/zsh")                                            ;
                                                                                          ;
-;; Emacs doesn't ask to kill active processes in eshell on exit
-;(defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
-;  "Prevent annoying \"Active processes exist\" query when you quit Emacs."
-;  (flet ((process-list ())) ad-do-it))
+;; Emacs doesn't ask to kill active processes in eshell on exit                          ;
+;(defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)                ;
+;  "Prevent annoying \"Active processes exist\" query when you quit Emacs."              ;
+;  (flet ((process-list ())) ad-do-it))                                                  ;
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -255,9 +254,8 @@
 ;; Magit Settings                                                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					                                                 ;
-;https://github.com/magit/magit/issues/1615
-;(setq magit-diff-options (list "--word-diff=color"))
-
+;https://github.com/magit/magit/issues/1615                                              ;
+;(setq magit-diff-options (list "--word-diff=color"))                                    ;
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -272,33 +270,36 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
 ;; Basic AucTeX Setup                                                                   ;;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
-                                                                                              ;
-;(load "auctex.el" nil t t)  ;; not needed anymore                                            ;
-(setq TeX-auto-save t)                                                                        ;
-(setq TeX-parse-self t)                                                                       ;
-                                                                                              ;
-;; nach Compile-Befehl werden Warnungen mit angezeigt                                         ;
-(setq TeX-debug-warning t)                                                                    ;
-                                                                                              ;
-;; nach Compile-Befehl werden BadBoxes mit angezeigt                                          ;
-(setq TeX-debug-bad-boxes t)                                                                  ;
-                                                                                              ;
-;; scoll automtically with the compilation output                                             ;
-(setq compilation-scroll-output t)                                                            ;
-                                                                                              ;
-                                                                                              ;
-(setq-default TeX-master nil)       ; kein TeX Master File per default                        ;
-(setq TeX-PDF-mode t)               ; PDF statt DVI per default                               ;
-                                                                                              ;
-(add-hook 'LaTeX-mode-hook (lambda () (set-fill-column 100))) ; Zeilenumbruch                 ;
-(add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)        ; nach 100 Zeichen                      ;
-(add-hook 'LaTeX-mode-hook 'visual-line-mode)         ; Word Wrap                             ;
-(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)          ; Mathe Modus                           ;
-(add-hook 'LaTeX-mode-hook 'turn-on-font-lock)        ; Syntax Highlight                      ;
-(add-hook 'LaTeX-mode-hook (lambda () (linum-mode)))  ; Zeilennummern automatisch             ;
-                                                                                              ;
-(setq TeX-electric-sub-and-superscript t) ; automatische Klammern bei _ und ^                 ;
-                                                                                              ;
+                                                                                         ;    ;
+;(load "auctex.el" nil t t)  ;; not needed anymore                                       ;    ;
+(setq TeX-auto-save t)                                                                   ;    ;
+(setq TeX-save-query nil)                                                                ;    ;
+                                                                                         ;    ;
+(setq TeX-parse-self t)                                                                  ;    ;
+                                                                                         ;    ;
+;; nach Compile-Befehl werden Warnungen mit angezeigt                                    ;    ;
+(setq TeX-debug-warnings t)                                                              ;    ;
+                                                                                         ;    ;
+;; nach Compile-Befehl werden BadBoxes mit angezeigt                                     ;    ;
+(setq TeX-debug-bad-boxes t)                                                             ;    ;
+                                                                                         ;    ;
+;; scoll automtically with the compilation output                                        ;    ;
+(setq compilation-scroll-output t)                                                       ;    ;
+                                                                                         ;    ;
+                                                                                         ;    ;
+(setq-default TeX-master nil)       ; kein TeX Master File per default                   ;    ;
+(setq TeX-PDF-mode t)               ; PDF statt DVI per default                          ;    ;
+                                                                                         ;    ;
+(add-hook 'LaTeX-mode-hook (lambda () (set-fill-column 100))) ; Zeilenumbruch            ;    ;
+(add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)        ; nach 100 Zeichen                 ;    ;
+(add-hook 'LaTeX-mode-hook 'visual-line-mode)         ; Word Wrap                        ;    ;
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)          ; Mathe Modus                      ;    ;
+(add-hook 'LaTeX-mode-hook 'turn-on-font-lock)        ; Syntax Highlight                 ;    ;
+(add-hook 'LaTeX-mode-hook (lambda () (linum-mode)))  ; Zeilennummern automatisch        ;    ;
+                                                                                         ;    ;
+(setq TeX-electric-sub-and-superscript t) ; automatische Klammern bei _ und ^            ;    ;
+                                                                                         ;    ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
                                                                                               ;
                                                                                               ;
                                                                                               ;
@@ -307,37 +308,57 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
                                                                                          ;    ;
 ;; Save buffer and fold buffer                                                           ;    ;
-(defun latex-fold-and-save() (interactive)                                               ;    ;
-    (save-buffer)                                                                        ;    ;
-    (TeX-fold-buffer)                                                                    ;    ;
-)                                                                                        ;    ;
+;(defun latex-fold-and-save() (interactive)                                              ;    ;
+;    (save-buffer)                                                                       ;    ;
+;    (TeX-fold-buffer)                                                                   ;    ;
+;)                                                                                       ;    ;
                                                                                          ;    ;
 ;; automatically saves buffer before compiling and folds all code                        ;    ;
-(defun latex-my-master() (interactive)                                                   ;    ;
-    (save-buffer)                                                                        ;    ;
-    (TeX-fold-buffer)                                                                    ;    ;
-    (TeX-command-master)                                                                 ;    ;
-    (set-process-query-on-exit-flag (get-process "latexmk") nil)                         ;    ;
-    ;(TeX-recenter-output-buffer)                                                        ;    ;
-)                                                                                        ;    ;
+;(defun latex-my-master() (interactive)                                                  ;    ;
+;    (TeX-fold-buffer)                                                                   ;    ;
+;    (TeX-command-master)                                                                ;    ;
+;    (let ((latexmk-process (get-process "latexmk")))                                    ;    ;
+;      (when latexmk-process                                                             ;    ;
+;	(set-process-query-on-exit-flag latexmk-process nil)))                           ;    ;
+;    ;(TeX-recenter-output-buffer)                                                       ;    ;
+;)                                                                                       ;    ;
                                                                                          ;    ;
 ;; Bind keys in LaTeX mode                                                               ;    ;
 (defun latex-my-bindings ()                                                              ;    ;
-    (define-key LaTeX-mode-map (kbd "<f5>") 'latex-my-master)                            ;    ;
-    ;(define-key LaTeX-mode-map (kbd "<f6>") 'TeX-next-error)                            ;    ;
-    (define-key LaTeX-mode-map (kbd "<f6>") 'TeX-view)                                   ;    ;
-    (define-key LaTeX-mode-map (kbd "<f7>") 'latex-fold-and-save)                        ;    ;
+    (define-key LaTeX-mode-map (kbd "<f5>") 'TeX-command-run-all)                        ;    ;
+    (define-key LaTeX-mode-map (kbd "<f6>") 'latex-fold-and-save)                        ;    ;
+    (define-key LaTeX-mode-map (kbd "<f7>") 'TeX-previous-error)                         ;    ;
+    (define-key LaTeX-mode-map (kbd "<f8>") 'TeX-next-error)                             ;    ;
+    ;(define-key LaTeX-mode-map (kbd "<f6>") 'TeX-view)                                  ;    ;
     (define-key LaTeX-mode-map (kbd "C-c C-c") 'TeX-comment-or-uncomment-region)         ;    ;
 )                                                                                        ;    ;
                                                                                          ;    ;
 (add-hook 'LaTeX-mode-hook 'latex-my-bindings)                                           ;    ;
                                                                                          ;    ;
-(add-hook 'TeX-output-mode-hook
-    (lambda ()
-      (define-key TeX-special-mode-map (kbd "M-SPC") 'end-of-buffer)
-      (define-key TeX-special-mode-map (kbd "SPC")   'scroll-down-command)))
+(add-hook 'TeX-output-mode-hook                                                          ;    ;
+    (lambda ()                                                                           ;    ;
+      (define-key TeX-special-mode-map (kbd "M-SPC") 'end-of-buffer)                     ;    ;
+      (define-key TeX-special-mode-map (kbd "SPC")   'scroll-down-command)))             ;    ;
+                                                                                         ;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
-                                                                                              ;
+					;
+
+;; (require 'tex)
+;; (TeX-add-style-hook
+;;  "preamble-thesis"
+;;  (lambda ()
+;;    (TeX-run-style-hooks
+;;     "amsmath")
+;;    (LaTeX-add-environments
+;;     '("definition" LaTeX-env-label)
+;;     '("claim")
+;;     )))
+
+
+
+
+
+
                                                                                               ;
                                                                                               ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
@@ -521,7 +542,7 @@
      '("latexmk" "latexmk -pdf %s" TeX-run-TeX nil t                                     ;    ;
        :help "Run latexmk on file")                                                      ;    ;
      TeX-command-list)))                                                                 ;    ;
-  (add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))            ;    ;
+  ;(add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))           ;    ;
                                                                                          ;    ;
   ;; use Skim as default pdf viewer                                                      ;    ;
   ;; Skim's displayline is used for forward search (from .tex to .pdf)                   ;    ;
@@ -529,8 +550,7 @@
   (setq TeX-view-program-selection '((output-pdf "PDF Viewer")))                         ;    ;
   (setq TeX-view-program-list                                                            ;    ;
     '(("PDF Viewer"                                                                      ;    ;
-       ;"/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b"       ;    ;
-       "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o %b"           ;    ;
+       "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b"        ;    ;
        )))                                                                               ;    ;
                                                                                          ;    ;
   (server-start); start emacs in server mode so that skim can talk to it                 ;    ;
