@@ -49,10 +49,10 @@
 
 
 ;; add /usr/texbin to PATH, so LaTeX compile works within Emacs
-(setenv "PATH" 				
-  (concat (getenv "PATH")
-	  ":/usr/texbin"
-	  ":/usr/local/texlive/2013/bin/universal-darwin"))
+; (setenv "PATH" 				
+;   (concat (getenv "PATH")
+; 	  ":/usr/texbin"
+; 	  ":/usr/local/texlive/2013/bin/universal-darwin"))
 
 (add-to-list 'exec-path "/usr/texbin")
 (add-to-list 'exec-path "/usr/local/texlive/2013/bin/universal-darwin")
