@@ -39,7 +39,9 @@
 (cond
  ((string-equal system-type "windows-nt") ; Microsoft Windows
   (progn
-    (message "Microsoft Windows detected")))
+    (message "Microsoft Windows detected"))
+  (menu-bar-mode -1)
+  )
  ((string-equal system-type "darwin") ; Mac OS X
   (progn
     (message "Mac OS X detected")))
