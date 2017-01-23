@@ -142,6 +142,7 @@
                                                                                          ;
 ;; mit "Drucken" magit-status öffnen                                                     ;
 (global-set-key [f13] 'magit-status)                                                     ;
+(global-set-key [scroll] 'magit-status)                                                  ;
                                                                                          ;
                                                                                          ;
                                                                                          ;
