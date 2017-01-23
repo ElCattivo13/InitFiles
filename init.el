@@ -51,10 +51,10 @@
 
 
 ;; add /usr/texbin to PATH, so LaTeX compile works within Emacs
-; (setenv "PATH" 				
-;   (concat (getenv "PATH")
-; 	  ":/usr/texbin"
-; 	  ":/usr/local/texlive/2013/bin/universal-darwin"))
+(setenv "PATH" 				
+  (concat (getenv "PATH")
+	  ":/usr/texbin"
+	  ":/usr/local/texlive/2013/bin/universal-darwin"))
 
 (add-to-list 'exec-path "/usr/texbin")
 (add-to-list 'exec-path "/usr/local/texlive/2013/bin/universal-darwin")
@@ -315,19 +315,20 @@
 ;    (TeX-fold-buffer)                                                                   ;    ;
 ;)                                                                                       ;    ;
                                                                                          ;    ;
-;; automatically saves buffer before compiling and folds all code                        ;    ;
-;(defun latex-my-master() (interactive)                                                  ;    ;
-;    (TeX-fold-buffer)                                                                   ;    ;
-;    (TeX-command-master)                                                                ;    ;
-;    (let ((latexmk-process (get-process "latexmk")))                                    ;    ;
-;      (when latexmk-process                                                             ;    ;
-;	(set-process-query-on-exit-flag latexmk-process nil)))                           ;    ;
-;    ;(TeX-recenter-output-buffer)                                                       ;    ;
-;)                                                                                       ;    ;
+;; automatically folds all code before compiling                                         ;    ;
+(defun latex-my-master() (interactive)                                                   ;    ;
+       (TeX-fold-buffer)                                                                 ;    ;
+       (TeX-command-run-all nil)                                                         ;    ;
+   ;; (TeX-command-master)                                                               ;    ;
+   ;; (let ((latexmk-process (get-process "latexmk")))                                   ;    ;
+   ;;   (when latexmk-process                                                            ;    ;
+   ;; 	(set-process-query-on-exit-flag latexmk-process nil)))                           ;    ;
+   ;(TeX-recenter-output-buffer)                                                         ;    ;
+)                                                                                        ;    ;
                                                                                          ;    ;
 ;; Bind keys in LaTeX mode                                                               ;    ;
 (defun latex-my-bindings ()                                                              ;    ;
-    (define-key LaTeX-mode-map (kbd "<f5>") 'TeX-command-run-all)                        ;    ;
+    (define-key LaTeX-mode-map (kbd "<f5>") 'latex-my-master)                            ;    ;
     (define-key LaTeX-mode-map (kbd "<f6>") 'latex-fold-and-save)                        ;    ;
     (define-key LaTeX-mode-map (kbd "<f7>") 'TeX-previous-error)                         ;    ;
     (define-key LaTeX-mode-map (kbd "<f8>") 'TeX-next-error)                             ;    ;
@@ -354,7 +355,11 @@
 ;;    (LaTeX-add-environments
 ;;     '("definition" LaTeX-env-label)
 ;;     '("claim")
-;;     )))
+;;     )
+;;    )
+
+
+;;  )
 
 
 
