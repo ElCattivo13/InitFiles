@@ -37,28 +37,36 @@
 ;; check OS type
 ;; from http://ergoemacs.org/emacs/elisp_determine_OS_version.html
 (cond
- ((string-equal system-type "windows-nt") ; Microsoft Windows
-  (progn
-    (message "Microsoft Windows detected"))
-  (menu-bar-mode -1)
+
+  ;; Microsoft Windows
+  ((string-equal system-type "windows-nt")
+    (progn
+      (message "Microsoft Windows detected"))
+    (menu-bar-mode -1)
+    (setenv "%PATH%"
+      (concat (getenv "%PATH%")
+        ":e:/texlive/2016/bin/win32"))
+    (add-to-list 'exec-path "e:/texlive/2016/bin/win32")
   )
- ((string-equal system-type "darwin") ; Mac OS X
-  (progn
-    (message "Mac OS X detected")))
- ((string-equal system-type "gnu/linux") ; linux
-  (progn
-    (message "Linux detected"))))
 
+  ;; Mac OS X
+  ((string-equal system-type "darwin")
+    (progn
+      (message "Mac OS X detected"))
 
-;; add /usr/texbin to PATH, so LaTeX compile works within Emacs
-(setenv "PATH" 				
-  (concat (getenv "PATH")
-	  ":/usr/texbin"
-	  ":/usr/local/texlive/2013/bin/universal-darwin"))
-
-(add-to-list 'exec-path "/usr/texbin")
-(add-to-list 'exec-path "/usr/local/texlive/2013/bin/universal-darwin")
-
+    ;; add /usr/texbin to PATH, so LaTeX compile works within Emacs
+    (setenv "PATH" 				
+      (concat (getenv "PATH")
+        ":/usr/texbin"
+        ":/usr/local/texlive/2013/bin/universal-darwin"))
+    (add-to-list 'exec-path "/usr/texbin")
+    (add-to-list 'exec-path "/usr/local/texlive/2013/bin/universal-darwin")
+  )
+  ((string-equal system-type "gnu/linux") ; linux
+   (progn
+     (message "Linux detected"))
+  )
+)
 
 ;; turn off any sound in Emacs
 (setq ring-bell-function 'ignore)
