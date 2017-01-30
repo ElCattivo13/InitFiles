@@ -5,8 +5,9 @@
 ;; Emacs Version: 24.3 (9.0)
 ;;
 ;; OS: Mac OS X El Capitan (10.11.3)
+;;     Ubuntu 16.10
 ;;
-;; last update: 2016-03-10
+;; last update: 2017-01-30
 ;;
 ;; ToDo: - tell RefTeX to look for bib files in the current directory
 ;;       - Dont ask for open processes when exiting
@@ -47,6 +48,8 @@
       (concat (getenv "%PATH%")
         ":e:/texlive/2016/bin/win32"))
     (add-to-list 'exec-path "e:/texlive/2016/bin/win32")
+    ;; UTF-8 as default encoding
+    (set-language-environment "UTF-8")
   )
 
   ;; Mac OS X
@@ -101,6 +104,17 @@
 ;; No scroll bars
 (scroll-bar-mode -1)
 
+;; Gitlab integration
+; https://github.com/nlamirault/emacs-gitlab
+(unless (package-installed-p 'gitlab)
+  (package-install 'gitlab))
+
+;; dict.cc integration
+(unless (package-installed-p 'dictcc)
+  (package-install 'dictcc))
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Workgroups2                                                                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -108,6 +122,9 @@
                                                                                          ;
 ;; only when opened as App                                                               ;
 (when (display-graphic-p)                                                                ;
+                                                                                         ;
+  (unless (package-installed-p 'workgroups2)                                             ;
+    (package-install 'workgroups2))                                                      ;
                                                                                          ;
   (message "Loading workgroups2")                                                        ;
                                                                                          ;
@@ -133,6 +150,9 @@
 ;; Color settings                                                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					                                                 ;
+(unless (package-installed-p 'color-theme-sanityinc-tomorrow)                            ;
+  (package-install 'color-theme-sanityinc-tomorrow))                                     ;
+					                                                 ;
 (require 'color-theme-sanityinc-tomorrow)                                                ;
 (load-theme 'sanityinc-tomorrow-night t)                                                 ;
                                                                                          ;
@@ -148,9 +168,6 @@
 ;; mit Crtl-TAB zum nächsten Window springen                                             ;
 ;(global-set-key [M-tab] 'other-window)                                                  ;
                                                                                          ;
-;; mit "Drucken" magit-status öffnen                                                     ;
-(global-set-key [f13] 'magit-status)                                                     ;
-(global-set-key [scroll] 'magit-status)                                                  ;
                                                                                          ;
                                                                                          ;
                                                                                          ;
@@ -179,6 +196,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; https://www.emacswiki.org/emacs/EmacsLispMode                                         ;
 (message "Loading smartparens")                                                          ;
+                                                                                         ;
+(unless (package-installed-p 'smartparens)                                               ;
+  (package-install 'smartparens))                                                        ;
                                                                                          ;
 (require 'smartparens-config)                                                            ;
 (smartparens-global-mode)                                                                ;
@@ -265,8 +285,17 @@
 ;; Magit Settings                                                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					                                                 ;
+(unless (package-installed-p 'magit)                                                     ;
+  (package-install 'magit))                                                              ;
+					                                                 ;
+;; mit "Drucken"(Mac) und "Rollen"(Win) magit-status öffnen                              ;
+(global-set-key [f13] 'magit-status)                                                     ;
+(global-set-key [scroll] 'magit-status)                                                  ;
+(global-set-key [Scroll_Lock] 'magit-status)                                             ;
+                                                                                         ;
 ;https://github.com/magit/magit/issues/1615                                              ;
 ;(setq magit-diff-options (list "--word-diff=color"))                                    ;
+                                                                                         ;
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -277,6 +306,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (message "Loading LaTeX specific settings")                                                   ;
                                                                                               ;
+(unless (package-installed-p 'auctex)                                                         ;
+  (package-install 'auctex))                                                                  ;
                                                                                               ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
 ;; Basic AucTeX Setup                                                                   ;;    ;
@@ -581,7 +612,7 @@
 	                                                                                      ;
 	                                                                                      ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
-;; Synctex with Skim (Windows 10)                                                       ;;    ;
+;; Synctex with SumatraPDF (Windows 10)                                                 ;;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
                                                                                          ;    ;
 ;; only when opened as App                                                               ;    ;
