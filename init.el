@@ -65,9 +65,17 @@
     (add-to-list 'exec-path "/usr/texbin")
     (add-to-list 'exec-path "/usr/local/texlive/2013/bin/universal-darwin")
   )
-  ((string-equal system-type "gnu/linux") ; linux
-   (progn
-     (message "Linux detected"))
+
+  ;; Linux
+  ((string-equal system-type "gnu/linux")
+    (progn
+      (message "Linux detected"))
+
+    ;; add
+    (setenv "PATH"
+      (concat (getenv "PATH")
+        ":/usr/local/texlive/2016/bin/x86_64-linux/"))
+    (add-to-list 'exec-path "/usr/local/texlive/2016/bin/x86_64-linux")
   )
 )
 
@@ -287,7 +295,7 @@
 					                                                 ;
 (unless (package-installed-p 'magit)                                                     ;
   (package-install 'magit))                                                              ;
-					                                                 ;
+                                                                                         ;
 ;; mit "Drucken"(Mac) und "Rollen"(Win) magit-status öffnen                              ;
 (global-set-key [f13] 'magit-status)                                                     ;
 (global-set-key [scroll] 'magit-status)                                                  ;
@@ -308,6 +316,9 @@
                                                                                               ;
 (unless (package-installed-p 'auctex)                                                         ;
   (package-install 'auctex))                                                                  ;
+                                                                                              ;
+(unless (package-installed-p 'outline-magic)                                                  ;
+  (package-install 'outline-magic))                                                           ;
                                                                                               ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
 ;; Basic AucTeX Setup                                                                   ;;    ;
