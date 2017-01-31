@@ -41,7 +41,10 @@ export OS=$(uname -s)
 #export LD_LIBRARY_PATH="/users/lat/lippmann/.perl/lib/:$LD_LIBRARY_PATH"
 
 # LaTeX
-export PATH=/usr/local/texlive/2013/bin/universal-darwin:/usr/local/texlive/2013/bin/x86_64-darwin:/opt/local/bin:$PATH
+case $(uname -s) in
+    Darwin) export PATH=/usr/local/texlive/2013/bin/universal-darwin:/usr/local/texlive/2013/bin/x86_64-darwin:/opt/local/bin:$PATH ;;
+    Linux) export PATH=/usr/local/texlive/2016/bin/x86_64-linux:$PATH ;;
+esac
 #export TEXINPUTS=".:/users/lat/lippmann/Documents/LaTeXInputs/:"
 #export BIBINPUTS=".:/users/lat/lippmann/Documents/LaTeXInputs/:"
 #export BSTINPUTS=".:/users/lat/lippmann/Documents/LaTeXInputs/:"
