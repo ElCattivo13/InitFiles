@@ -117,9 +117,38 @@
 (unless (package-installed-p 'gitlab)
   (package-install 'gitlab))
 
-;; dict.cc integration
-(unless (package-installed-p 'dictcc)
-  (package-install 'dictcc))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; dict.cc integration                                                                  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                                                                         ;
+(unless (package-installed-p 'dictcc)                                                    ;
+  (package-install 'dictcc))                                                             ;
+                                                                                         ;
+                                                                                         ;
+(defun delete-word-at-point (&rest r)                                                    ;
+  ;; hier wird das Wort am Cursor geloescht, sofern vorhanden                            ;
+  (let (bounds pos1 pos2)                                                                ;
+    (setq bounds (bounds-of-thing-at-point 'word))                                       ;
+    (setq pos1 (car bounds))                                                             ;
+    (setq pos2 (cdr bounds))                                                             ;
+    (delete-region pos1 pos2)))                                                          ;
+                                                                                         ;
+(advice-add 'dictcc--insert-source-translation :before #'delete-word-at-point)           ;
+(advice-add 'dictcc--insert-destination-translation :before #'delete-word-at-point)      ;
+                                                                                         ;
+(defun mydictcc ()                                                                       ;
+  "HERE COMES MY fantastisch DOCSTRING"                                                  ;
+  (interactive)                                                                          ;
+  (let ((query (thing-at-point 'word)))                                                  ;
+    (if query                                                                            ;
+	(dictcc query)                                                                   ;
+      (call-interactively #'dictcc))))                                                   ;
+                                                                                         ;
+(global-set-key [f7] 'mydictcc)                                                          ;
+                                                                                         ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 
@@ -381,7 +410,7 @@
 (defun latex-my-bindings ()                                                              ;    ;
     (define-key LaTeX-mode-map (kbd "<f5>") 'latex-my-master)                            ;    ;
     (define-key LaTeX-mode-map (kbd "<f6>") 'latex-fold-and-save)                        ;    ;
-    (define-key LaTeX-mode-map (kbd "<f7>") 'TeX-previous-error)                         ;    ;
+    ;(define-key LaTeX-mode-map (kbd "<f7>") 'TeX-previous-error)                        ;    ;
     (define-key LaTeX-mode-map (kbd "<f8>") 'TeX-next-error)                             ;    ;
     ;(define-key LaTeX-mode-map (kbd "<f6>") 'TeX-view)                                  ;    ;
     (define-key LaTeX-mode-map (kbd "C-c C-c") 'TeX-comment-or-uncomment-region)         ;    ;
@@ -455,6 +484,7 @@
 (setq safe-local-variable-values                                                         ;    ;
    (quote                                                                                ;    ;
     ((reftex-default-bibliography "references.bib")                                      ;    ;
+     (reftex-default-bibliography "../references.bib")                                   ;    ;
      (TeX-master . t))))                                                                 ;    ;
                                                                                          ;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
