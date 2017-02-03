@@ -448,6 +448,31 @@
 ;;  )
 
 
+;;
+;; TeXcount setup for TeXcount version 2.3 and later
+;;
+;; http://app.uio.no/ifi/texcount/faq.html#emacs
+(defun texcount ()
+  (interactive)
+  (let*
+    ( (this-file (buffer-file-name))
+      (enc-str (symbol-name buffer-file-coding-system))
+      (enc-opt
+        (cond
+          ((string-match "utf-8" enc-str) "-utf8")
+          ((string-match "latin" enc-str) "-latin1")
+          ("-encoding=guess")
+      ) )
+      (word-count
+        (with-output-to-string
+          (with-current-buffer standard-output
+            (call-process "texcount" nil t nil "-0" enc-opt this-file)
+    ) ) ) )
+    (message word-count)
+) )
+(add-hook 'LaTeX-mode-hook (lambda () (define-key LaTeX-mode-map (kbd "C-c w") 'texcount)))
+
+
 
 
 
