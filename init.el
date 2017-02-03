@@ -333,6 +333,12 @@
 ;https://github.com/magit/magit/issues/1615                                              ;
 ;(setq magit-diff-options (list "--word-diff=color"))                                    ;
                                                                                          ;
+(defun auto-magit-refresh (&optional arg)                                                ;
+  "This function should call magit-refresh if the file is in a git repository"           ;
+  (if (string-equal "Git" (vc-backend (buffer-file-name))) (magit-refresh)))             ;
+                                                                                         ;
+;; always doing an auto-magit-refresh after saving a buffer                              ;
+(advice-add 'save-buffer :after #'auto-magit-refresh)                                    ;
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
