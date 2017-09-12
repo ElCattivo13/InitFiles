@@ -42,7 +42,7 @@ export OS=$(uname -s)
 
 # LaTeX
 case $(uname -s) in
-    Darwin) export PATH=/usr/local/texlive/2013/bin/universal-darwin:/usr/local/texlive/2013/bin/x86_64-darwin:/opt/local/bin:$PATH ;;
+    Darwin) export PATH=/usr/local/texlive/2017/bin/x86_64-darwin:/opt/local/bin:$PATH ;;
     Linux) export PATH=/usr/local/texlive/2016/bin/x86_64-linux:$PATH ;;
 esac
 #export TEXINPUTS=".:/users/lat/lippmann/Documents/LaTeXInputs/:"
