@@ -1,13 +1,14 @@
-;; init.el for Emacs 24
+;; init.el for Emacs 25.2
 ;;
 ;; Author: Stephan Böhme
 ;; 
-;; Emacs Version: 24.3 (9.0)
+;; Emacs Version: 25.2.1
 ;;
-;; OS: Mac OS X El Capitan (10.11.3)
+;; OS: Mac OS X El Capitan (10.11.6)
 ;;     Ubuntu 16.10
+;;     Windows 10
 ;;
-;; last update: 2017-01-30
+;; last update: 2017-08-10
 ;;
 ;; ToDo: - tell RefTeX to look for bib files in the current directory
 ;;       - Dont ask for open processes when exiting
@@ -61,9 +62,9 @@
     (setenv "PATH" 				
       (concat (getenv "PATH")
         ":/usr/texbin"
-        ":/usr/local/texlive/2013/bin/universal-darwin"))
+        ":/usr/local/texlive/2017/bin/x86_64-darwin"))
     (add-to-list 'exec-path "/usr/texbin")
-    (add-to-list 'exec-path "/usr/local/texlive/2013/bin/universal-darwin")
+    (add-to-list 'exec-path "/usr/local/texlive/2017/bin/x86_64-darwin")
   )
 
   ;; Linux
@@ -110,14 +111,14 @@
 ;(setq debug-on-error t)
 
 ;; No scroll bars
-(scroll-bar-mode -1)
+(when (display-graphic-p)
+  (scroll-bar-mode -1)
+)
 
 ;; Gitlab integration
-; https://github.com/nlamirault/emacs-gitlab
-(unless (package-installed-p 'gitlab)
-  (package-install 'gitlab))
-
-
+;; https://github.com/nlamirault/emacs-gitlab
+;(unless (package-installed-p 'gitlab)
+;  (package-install 'gitlab))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; dict.cc integration                                                                  ;;
@@ -143,7 +144,7 @@
   (interactive)                                                                          ;
   (let ((query (thing-at-point 'word)))                                                  ;
     (if query                                                                            ;
-	(dictcc query)                                                                   ;
+        (dictcc query)                                                                   ;
       (call-interactively #'dictcc))))                                                   ;
                                                                                          ;
 (global-set-key [f7] 'mydictcc)                                                          ;
@@ -186,10 +187,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Color settings                                                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-					                                                 ;
+                                                                                         ;
 (unless (package-installed-p 'color-theme-sanityinc-tomorrow)                            ;
   (package-install 'color-theme-sanityinc-tomorrow))                                     ;
-					                                                 ;
+                                                                                         ;
 (require 'color-theme-sanityinc-tomorrow)                                                ;
 (load-theme 'sanityinc-tomorrow-night t)                                                 ;
                                                                                          ;
@@ -257,39 +258,37 @@
 (defun line-at-click ()                                                                  ;
   (save-excursion                                                                        ;
     (let ((click-y (cdr (cdr (mouse-position))))                                         ;
-	  (line-move-visual-store line-move-visual))                                     ;
-	  (setq line-move-visual t)                                                      ;
-	  (goto-char (window-start))                                                     ;
-	  (next-line (1- click-y))                                                       ;
-	  (setq line-move-visual line-move-visual-store)                                 ;
-	  ;; If you are using tabbar substitute the next line with                       ;
-	  ;; (line-number-at-pos))))                                                     ;
-	  (1+ (line-number-at-pos)))))                                                   ;
+          (line-move-visual-store line-move-visual))                                     ;
+          (setq line-move-visual t)                                                      ;
+          (goto-char (window-start))                                                     ;
+          (next-line (1- click-y))                                                       ;
+          (setq line-move-visual line-move-visual-store)                                 ;
+          ;; If using tabbar substitute the next line with (line-number-at-pos))))       ;
+          (1+ (line-number-at-pos)))))                                                   ;
                                                                                          ;
 (defun md-select-linum ()                                                                ;
   (interactive)                                                                          ;
   (goto-line (line-at-click))                                                            ;
   (set-mark (point))                                                                     ;
   (setq *linum-mdown-line*                                                               ;
-		(line-number-at-pos)))                                                   ;
+               (line-number-at-pos)))                                                    ;
                                                                                          ;
 (defun mu-select-linum ()                                                                ;
   (interactive)                                                                          ;
   (when *linum-mdown-line*                                                               ;
-	(let (mu-line)                                                                   ;
-	  ;; (goto-line (line-at-click))                                                 ;
-	  (setq mu-line (line-at-click))                                                 ;
-	  (goto-line (max *linum-mdown-line* mu-line))                                   ;
-	  (set-mark (line-end-position))                                                 ;
-	  (goto-line (min *linum-mdown-line* mu-line))                                   ;
-	  (setq *linum-mdown*                                                            ;
-			nil))))                                                          ;
+        (let (mu-line)                                                                   ;
+          ;; (goto-line (line-at-click))                                                 ;
+          (setq mu-line (line-at-click))                                                 ;
+          (goto-line (max *linum-mdown-line* mu-line))                                   ;
+          (set-mark (line-end-position))                                                 ;
+          (goto-line (min *linum-mdown-line* mu-line))                                   ;
+          (setq *linum-mdown*                                                            ;
+                        nil))))                                                          ;
                                                                                          ;
 (global-set-key (kbd "<left-margin> <down-mouse-1>") 'md-select-linum)                   ;
 (global-set-key (kbd "<left-margin> <mouse-1>") 'mu-select-linum)                        ;
 (global-set-key (kbd "<left-margin> <drag-mouse-1>") 'mu-select-linum)                   ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -301,7 +300,7 @@
 (add-hook 'emacs-lisp-mode-hook                                                          ;
   (lambda () (linum-mode)                                                                ;
              (define-key emacs-lisp-mode-map                                             ;
-	       (kbd "C-c C-c") 'comment-or-uncomment-region)))                           ;
+               (kbd "C-c C-c") 'comment-or-uncomment-region)))                           ;
                                                                                          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -321,7 +320,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Magit Settings                                                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-					                                                 ;
+                                                                                         ;
 (unless (package-installed-p 'magit)                                                     ;
   (package-install 'magit))                                                              ;
                                                                                          ;
@@ -408,7 +407,7 @@
    ;; (TeX-command-master)                                                               ;    ;
    ;; (let ((latexmk-process (get-process "latexmk")))                                   ;    ;
    ;;   (when latexmk-process                                                            ;    ;
-   ;; 	(set-process-query-on-exit-flag latexmk-process nil)))                           ;    ;
+   ;;   (set-process-query-on-exit-flag latexmk-process nil)))                           ;    ;
    ;(TeX-recenter-output-buffer)                                                         ;    ;
 )                                                                                        ;    ;
                                                                                          ;    ;
@@ -419,7 +418,7 @@
     ;(define-key LaTeX-mode-map (kbd "<f7>") 'TeX-previous-error)                        ;    ;
     (define-key LaTeX-mode-map (kbd "<f8>") 'TeX-next-error)                             ;    ;
     ;(define-key LaTeX-mode-map (kbd "<f6>") 'TeX-view)                                  ;    ;
-    (define-key LaTeX-mode-map (kbd "C-c C-c") 'TeX-comment-or-uncomment-region)         ;    ;
+    ;(define-key LaTeX-mode-map (kbd "C-c C-c") 'TeX-comment-or-uncomment-region)        ;    ;
 )                                                                                        ;    ;
                                                                                          ;    ;
 (add-hook 'LaTeX-mode-hook 'latex-my-bindings)                                           ;    ;
@@ -474,9 +473,6 @@
 
 
 
-
-
-
                                                                                               ;
                                                                                               ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
@@ -487,7 +483,7 @@
 ;(setq ispell-program-name "/opt/local/bin/aspell"                                       ;    ;
 (setq ispell-program-name "/usr/local/bin/aspell"                                        ;    ;
       ispell-dictionary "english"                                                        ;    ;
-;      ispell-personal-dictionary "/Users/boehme/Library/Preferences/cocoAspell/LocalDictionary.pws"         
+;      ispell-personal-dictionary "/Users/boehme/Library/Preferences/cocoAspell/LocalDictionary.pws"
       ispell-dictionary-alist                                                            ;    ;
       (let ((default '("[A-Za-z]" "[^A-Za-z]" "[']" nil                                  ;    ;
                        ("-B" "-d" "english" "--dict-dir"                                 ;    ;
@@ -514,9 +510,11 @@
                                                                                          ;    ;
 (setq safe-local-variable-values                                                         ;    ;
    (quote                                                                                ;    ;
-    ((reftex-default-bibliography "references.bib")                                      ;    ;
-     (reftex-default-bibliography "../references.bib")                                   ;    ;
-     (TeX-master . t))))                                                                 ;    ;
+    ((reftex-default-bibliography "./references.bib")                                    ;    ;
+     (TeX-command-extra-options . "-shell-escape")                                       ;    ;
+     (TeX-master . t)                                                                    ;    ;
+     (TeX-master . main)                                                                 ;    ;
+    )))                                                                                  ;    ;
                                                                                          ;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
                                                                                               ;
@@ -528,20 +526,20 @@
 ;; Prefix um Mathesymole einzugeben: -> [F12]+a => \alpha                                ;    ;
 (setq LaTeX-math-abbrev-prefix (kbd "<f12>"))                                            ;    ;
 (setq LaTeX-math-list '(("<left>" "leftarrow" nil nil)                                   ;    ;
-			("<right>" "rightarrow" nil nil)                                 ;    ;
-			("<down>" "leftrightarrow" nil nil)                              ;    ;
-			("S-<leftt>" "Leftarrow" nil nil)                                ;    ;
-			("S-<right>" "Rightarrow" nil nil)                               ;    ;
-			("S-<down>" "Leftrightarrow" nil nil)                            ;    ;
-			("=" "coloneqq" nil nil)                                         ;    ;
-			("f" "varphi" nil nil)                                           ;    ;
-			("[" "sqsubseteq" nil nil)                                       ;    ;
-			("{" "subseteq" nil nil)                                         ;    ;
-			("+" "sqcup" nil nil)                                            ;    ;
-			("-" "sqcap" nil nil)                                            ;    ;
-			("e" "varepsilon" nil nil)                                       ;    ;
-			("." "ldots" nil nil)                                            ;    ;
-			("," "cdot" nil nil)))                                           ;    ;
+                        ("<right>" "rightarrow" nil nil)                                 ;    ;
+                        ("<down>" "leftrightarrow" nil nil)                              ;    ;
+                        ("S-<leftt>" "Leftarrow" nil nil)                                ;    ;
+                        ("S-<right>" "Rightarrow" nil nil)                               ;    ;
+                        ("S-<down>" "Leftrightarrow" nil nil)                            ;    ;
+                        ("=" "coloneqq" nil nil)                                         ;    ;
+                        ("f" "varphi" nil nil)                                           ;    ;
+                        ("[" "sqsubseteq" nil nil)                                       ;    ;
+                        ("{" "subseteq" nil nil)                                         ;    ;
+                        ("+" "sqcup" nil nil)                                            ;    ;
+                        ("-" "sqcap" nil nil)                                            ;    ;
+                        ("e" "varepsilon" nil nil)                                       ;    ;
+                        ("." "ldots" nil nil)                                            ;    ;
+                        ("," "cdot" nil nil)))                                           ;    ;
                                                                                          ;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
                                                                                               ;
@@ -564,22 +562,22 @@
          ("⊓" ("sqcap"))                                                                 ;    ;
          ("↳" ("itemarrow"))                                                             ;    ;
          ("↳" ("follows"))                                                               ;    ;
-	 ("T" ("true"))                                                                  ;    ;
-	 ("F" ("false"))                                                                 ;    ;
-	 ("|" ("concat"))                                                                ;    ;
-	 ("~" ("negnnf"))                                                                ;    ;
-	 ("¬" ("lnot"))                                                                  ;    ;
+         ("T" ("true"))                                                                  ;    ;
+         ("F" ("false"))                                                                 ;    ;
+         ("|" ("concat"))                                                                ;    ;
+         ("~" ("negnnf"))                                                                ;    ;
+         ("¬" ("lnot"))                                                                  ;    ;
         ) LaTeX-fold-math-spec-list))                                                    ;    ;
     (setq LaTeX-fold-macro-spec-list                                                     ;    ;
       (append                                                                            ;    ;
        '(("BOOM" ("boom"))                                                               ;    ;
-	 (1  ("cite"))                                                                   ;    ;
-	 (1  ("ref" "pageref" "eqref"))                                                  ;    ;
-	) LaTeX-fold-macro-spec-list))                                                   ;    ;
+         (1  ("cite"))                                                                   ;    ;
+         (1  ("ref" "pageref" "eqref"))                                                  ;    ;
+        ) LaTeX-fold-macro-spec-list))                                                   ;    ;
 ))                                                                                       ;    ;
                                                                                          ;    ;
 (add-hook 'LaTeX-mode-hook (lambda () (TeX-fold-mode t)                                  ;    ;
-			              (TeX-fold-buffer)))                                ;    ;
+                                      (TeX-fold-buffer)))                                ;    ;
                                                                                          ;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
                                                                                               ;
@@ -597,10 +595,10 @@
     (setq LaTeX-clean-intermediate-suffixes                                              ;    ;
       (append LaTeX-clean-intermediate-suffixes                                          ;    ;
        '("\\.tdo"                                                                        ;    ;
-	 "\\.upa"                                                                        ;    ;
-	 "\\.upb"                                                                        ;    ;
-	 "\\.fls"                                                                        ;    ;
-	 "\\.fdb_latexmk")))))                                                           ;    ;
+         "\\.upa"                                                                        ;    ;
+         "\\.upb"                                                                        ;    ;
+         "\\.fls"                                                                        ;    ;
+         "\\.fdb_latexmk")))))                                                           ;    ;
                                                                                          ;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
                                                                                               ;
@@ -623,12 +621,12 @@
 ;; Outline Minor Mode                                                                   ;;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
                                                                                          ;    ;
-(add-hook 'LaTeX-mode-hook (lambda() (outline-minor-mode t)))                            ;    ;
+;(add-hook 'LaTeX-mode-hook (lambda() (outline-minor-mode t)))                           ;    ;
                                                                                          ;    ;
-(add-hook 'outline-minor-mode-hook                                                       ;    ;
-          (lambda ()                                                                     ;    ;
-            (require 'outline-magic)                                                     ;    ;
-            (define-key outline-minor-mode-map [C-tab] 'outline-cycle)))                 ;    ;
+;(add-hook 'outline-minor-mode-hook                                                      ;    ;
+;          (lambda ()                                                                    ;    ;
+;            (require 'outline-magic)                                                    ;    ;
+;            (define-key outline-minor-mode-map [C-tab] 'outline-cycle)))                ;    ;
                                                                                          ;    ;
                                                                                          ;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
@@ -681,8 +679,8 @@
                                                                                          ;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
                                                                                               ;
-	                                                                                      ;
-	                                                                                      ;
+                                                                                              ;
+                                                                                              ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
 ;; Synctex with SumatraPDF (Windows 10)                                                 ;;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
@@ -707,13 +705,10 @@
 )))                                                                                      ;    ;
                                                                                          ;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
-	                                                                                      ;
-	                                                                                      ;
-	                                                                                      ;
+                                                                                              ;
+                                                                                              ;
+                                                                                              ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
 
 
 
@@ -800,3 +795,6 @@
 ;;           (pop-up-windows t))
 ;;       (set-window-buffer target-window buf)
 ;;       target-window)))
+
+
+
