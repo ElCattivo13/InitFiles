@@ -45,10 +45,10 @@
     (progn
       (message "Microsoft Windows detected"))
     (menu-bar-mode -1)
-    (setenv "%PATH%"
-      (concat (getenv "%PATH%")
-        ":e:/texlive/2016/bin/win32"))
-    (add-to-list 'exec-path "e:/texlive/2016/bin/win32")
+    ;(setenv "%PATH%"
+    ;  (concat (getenv "%PATH%")
+    ;    ":e:/texlive/2016/bin/win32"))
+    ;(add-to-list 'exec-path "e:/texlive/2016/bin/win32")
     ;; UTF-8 as default encoding
     (set-language-environment "UTF-8")
   )
@@ -73,10 +73,10 @@
       (message "Linux detected"))
 
     ;; add
-    (setenv "PATH"
-      (concat (getenv "PATH")
-        ":/usr/local/texlive/2016/bin/x86_64-linux/"))
-    (add-to-list 'exec-path "/usr/local/texlive/2016/bin/x86_64-linux")
+;    (setenv "PATH"
+;      (concat (getenv "PATH")
+;        ":/usr/local/texlive/2016/bin/x86_64-linux/"))
+;    (add-to-list 'exec-path "/usr/local/texlive/2016/bin/x86_64-linux")
   )
 )
 
@@ -85,6 +85,11 @@
 
 ;; hide ugly tool bar
 (tool-bar-mode -1)
+
+;; hide menu bar when opening within terminal
+(unless (display-graphic-p)
+  (menu-bar-mode -1))
+
 
 ;; delete selected text, when typing
 (delete-selection-mode t)
@@ -140,7 +145,7 @@
 (advice-add 'dictcc--insert-destination-translation :before #'delete-word-at-point)      ;
                                                                                          ;
 (defun mydictcc ()                                                                       ;
-  "HERE COMES MY fantastisch DOCSTRING"                                                  ;
+  "HERE COMES MY FANTASTIC DOCSTRING"                                                    ;
   (interactive)                                                                          ;
   (let ((query (thing-at-point 'word)))                                                  ;
     (if query                                                                            ;
@@ -170,7 +175,9 @@
                                                                                          ;
   ;; Change prefix key (before activating WG)                                            ;
   (setq wg-prefix-key (kbd "C-z"))                                                       ;
-  (setq wg-session-file "~/.emacs.d/myworkgroups.wg")                                    ;
+  (if (string-equal system-type "windows-nt")                                            ;
+      (setq wg-session-file "C:/Users/sb/AppData/Roaming/.emacs.d/myworkgroups.wg")      ;
+      (setq wg-session-file "~/.emacs.d/myworkgroups.wg"))                               ;
   (setq wg-session-load-on-start t)                                                      ;
                                                                                          ;
   ;; What to do on Emacs exit / workgroups-mode exit?                                    ;
@@ -218,7 +225,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                                                                          ;
 ;; set ZShell as default                                                                 ;
-;(setq  explicit-shell-file-name '"/bin/zsh")                                            ;
+(setq  explicit-shell-file-name '"/bin/zsh")                                             ;
                                                                                          ;
 ;; Emacs doesn't ask to kill active processes in eshell on exit                          ;
 ;(defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)                ;
@@ -324,10 +331,11 @@
 (unless (package-installed-p 'magit)                                                     ;
   (package-install 'magit))                                                              ;
                                                                                          ;
-;; mit "Drucken"(Mac) und "Rollen"(Win) magit-status öffnen                              ;
+;; mit "Drucken"(Mac), "Rollen"(Win), "Pause"(Linux) magit-status öffnen                 ;
 (global-set-key [f13] 'magit-status)                                                     ;
 (global-set-key [scroll] 'magit-status)                                                  ;
 (global-set-key [Scroll_Lock] 'magit-status)                                             ;
+(global-set-key [pause] 'magit-status)                                                   ;
                                                                                          ;
 ;https://github.com/magit/magit/issues/1615                                              ;
 ;(setq magit-diff-options (list "--word-diff=color"))                                    ;
@@ -394,34 +402,34 @@
 ;; My LaTeX Mode Key Bindings                                                           ;;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
                                                                                          ;    ;
-;; Save buffer and fold buffer                                                           ;    ;
-;(defun latex-fold-and-save() (interactive)                                              ;    ;
-;    (save-buffer)                                                                       ;    ;
-;    (TeX-fold-buffer)                                                                   ;    ;
-;)                                                                                       ;    ;
-                                                                                         ;    ;
-;; automatically folds all code before compiling                                         ;    ;
-(defun latex-my-master() (interactive)                                                   ;    ;
-       (TeX-fold-buffer)                                                                 ;    ;
-       (TeX-command-run-all nil)                                                         ;    ;
-   ;; (TeX-command-master)                                                               ;    ;
-   ;; (let ((latexmk-process (get-process "latexmk")))                                   ;    ;
-   ;;   (when latexmk-process                                                            ;    ;
-   ;;   (set-process-query-on-exit-flag latexmk-process nil)))                           ;    ;
-   ;(TeX-recenter-output-buffer)                                                         ;    ;
-)                                                                                        ;    ;
-                                                                                         ;    ;
-;; Bind keys in LaTeX mode                                                               ;    ;
-(defun latex-my-bindings ()                                                              ;    ;
-    (define-key LaTeX-mode-map (kbd "<f5>") 'latex-my-master)                            ;    ;
-    (define-key LaTeX-mode-map (kbd "<f6>") 'latex-fold-and-save)                        ;    ;
-    ;(define-key LaTeX-mode-map (kbd "<f7>") 'TeX-previous-error)                        ;    ;
-    (define-key LaTeX-mode-map (kbd "<f8>") 'TeX-next-error)                             ;    ;
-    ;(define-key LaTeX-mode-map (kbd "<f6>") 'TeX-view)                                  ;    ;
-    ;(define-key LaTeX-mode-map (kbd "C-c C-c") 'TeX-comment-or-uncomment-region)        ;    ;
-)                                                                                        ;    ;
-                                                                                         ;    ;
-(add-hook 'LaTeX-mode-hook 'latex-my-bindings)                                           ;    ;
+;; ;; Save buffer and fold buffer                                                           ;    ;
+;; ;(defun latex-fold-and-save() (interactive)                                              ;    ;
+;; ;    (save-buffer)                                                                       ;    ;
+;; ;    (TeX-fold-buffer)                                                                   ;    ;
+;; ;)                                                                                       ;    ;
+;;                                                                                          ;    ;
+;; ;; automatically folds all code before compiling                                         ;    ;
+;; (defun latex-my-master() (interactive)                                                   ;    ;
+;;        (TeX-fold-buffer)                                                                 ;    ;
+;;        (TeX-command-run-all nil)                                                         ;    ;
+;;    ;; (TeX-command-master)                                                               ;    ;
+;;    ;; (let ((latexmk-process (get-process "latexmk")))                                   ;    ;
+;;    ;;   (when latexmk-process                                                            ;    ;
+;;    ;; 	(set-process-query-on-exit-flag latexmk-process nil)))                           ;    ;
+;;    ;(TeX-recenter-output-buffer)                                                         ;    ;
+;; )                                                                                        ;    ;
+;;                                                                                          ;    ;
+;; ;; Bind keys in LaTeX mode                                                               ;    ;
+;; (defun latex-my-bindings ()                                                              ;    ;
+;;     (define-key LaTeX-mode-map (kbd "<f5>") 'latex-my-master)                            ;    ;
+;;     (define-key LaTeX-mode-map (kbd "<f6>") 'latex-fold-and-save)                        ;    ;
+;;     ;(define-key LaTeX-mode-map (kbd "<f7>") 'TeX-previous-error)                        ;    ;
+;;     (define-key LaTeX-mode-map (kbd "<f8>") 'TeX-next-error)                             ;    ;
+;;     ;(define-key LaTeX-mode-map (kbd "<f6>") 'TeX-view)                                  ;    ;
+;;     (define-key LaTeX-mode-map (kbd "C-c C-c") 'TeX-comment-or-uncomment-region)         ;    ;
+;; )                                                                                        ;    ;
+;;                                                                                          ;    ;
+;; (add-hook 'LaTeX-mode-hook 'latex-my-bindings)                                           ;    ;
                                                                                          ;    ;
 (add-hook 'TeX-output-mode-hook                                                          ;    ;
     (lambda ()                                                                           ;    ;
@@ -429,7 +437,6 @@
       (define-key TeX-special-mode-map (kbd "SPC")   'scroll-down-command)))             ;    ;
                                                                                          ;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
-					;
 
 ;; (require 'tex)
 ;; (TeX-add-style-hook
@@ -475,27 +482,27 @@
 
                                                                                               ;
                                                                                               ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
-;; Spellchecking                                                                        ;;    ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
-                                                                                         ;    ;
-;; get Aspell to work and enable flyspell                                                ;    ;
-;(setq ispell-program-name "/opt/local/bin/aspell"                                       ;    ;
-(setq ispell-program-name "/usr/local/bin/aspell"                                        ;    ;
-      ispell-dictionary "english"                                                        ;    ;
-;      ispell-personal-dictionary "/Users/boehme/Library/Preferences/cocoAspell/LocalDictionary.pws"
-      ispell-dictionary-alist                                                            ;    ;
-      (let ((default '("[A-Za-z]" "[^A-Za-z]" "[']" nil                                  ;    ;
-                       ("-B" "-d" "english" "--dict-dir"                                 ;    ;
-                        "/Library/Application\ Support/cocoAspell/aspell6-en-6.0-0")     ;    ;
-                       nil iso-8859-1)))                                                 ;    ;
-        `((nil ,@default)                                                                ;    ;
-          ("english" ,@default))))                                                       ;    ;
-                                                                                         ;    ;
-;; activate flyspell automatically when entering latex mode                              ;    ;
-(add-hook 'LaTeX-mode-hook (lambda () (flyspell-mode)))                                  ;    ;
-                                                                                         ;    ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
+;; ;; Spellchecking                                                                        ;;    ;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
+;;                                                                                          ;    ;
+;; ;; get Aspell to work and enable flyspell                                                ;    ;
+;; ;(setq ispell-program-name "/opt/local/bin/aspell"                                       ;    ;
+;; (setq ispell-program-name "/usr/local/bin/aspell"                                        ;    ;
+;;       ispell-dictionary "english"                                                        ;    ;
+;; ;      ispell-personal-dictionary "/Users/boehme/Library/Preferences/cocoAspell/LocalDictionary.pws"         
+;;       ispell-dictionary-alist                                                            ;    ;
+;;       (let ((default '("[A-Za-z]" "[^A-Za-z]" "[']" nil                                  ;    ;
+;;                        ("-B" "-d" "english" "--dict-dir"                                 ;    ;
+;;                         "/Library/Application\ Support/cocoAspell/aspell6-en-6.0-0")     ;    ;
+;;                        nil iso-8859-1)))                                                 ;    ;
+;;         `((nil ,@default)                                                                ;    ;
+;;           ("english" ,@default))))                                                       ;    ;
+;;                                                                                          ;    ;
+;; ;; activate flyspell automatically when entering latex mode                              ;    ;
+;; (add-hook 'LaTeX-mode-hook (lambda () (flyspell-mode)))                                  ;    ;
+;;                                                                                          ;    ;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
                                                                                               ;
                                                                                               ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
@@ -603,84 +610,84 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
                                                                                               ;
                                                                                               ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
-;; Delete Biber Cache                                                                   ;;    ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
-                                                                                         ;    ;
-;; Delete cache of biber, sometimes solves biber compiling problems                      ;    ;
-(add-hook 'LaTeX-mode-hook (lambda ()                                                    ;    ;
-  (push                                                                                  ;    ;
-   '("BiberDeleteCache" "biber --cache | xargs rm -rfv" TeX-run-TeX nil t                ;    ;
-     :help "Delete cache of Biber")                                                      ;    ;
-   TeX-command-list)))                                                                   ;    ;
-                                                                                         ;    ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
+;; ;; Delete Biber Cache                                                                   ;;    ;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
+;;                                                                                          ;    ;
+;; ;; Delete cache of biber, sometimes solves biber compiling problems                      ;    ;
+;; (add-hook 'LaTeX-mode-hook (lambda ()                                                    ;    ;
+;;   (push                                                                                  ;    ;
+;;    '("BiberDeleteCache" "biber --cache | xargs rm -rfv" TeX-run-TeX nil t                ;    ;
+;;      :help "Delete cache of Biber")                                                      ;    ;
+;;    TeX-command-list)))                                                                   ;    ;
+;;                                                                                          ;    ;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
+;;                                                                                               ;
+;;                                                                                               ;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
+;; ;; Outline Minor Mode                                                                   ;;    ;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
+;;                                                                                          ;    ;
+;; (add-hook 'LaTeX-mode-hook (lambda() (outline-minor-mode t)))                            ;    ;
+;;                                                                                          ;    ;
+;; (add-hook 'outline-minor-mode-hook                                                       ;    ;
+;;           (lambda ()                                                                     ;    ;
+;;             (require 'outline-magic)                                                     ;    ;
+;;             (define-key outline-minor-mode-map [C-tab] 'outline-cycle)))                 ;    ;
+;;                                                                                          ;    ;
+;;                                                                                          ;    ;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
+;;                                                                                               ;
+;;                                                                                               ;
+;;                                                                                               ;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
+;; ;; Synctex with Skim (Mac OS X)                                                         ;;    ;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
+;;                                                                                          ;    ;
+;; ;; only when opened as App                                                               ;    ;
+;; (cond                                                                                    ;    ;
+;; ((string-equal system-type "darwin")                                                     ;    ;
+;; (when (display-graphic-p)                                                                ;    ;
+;;                                                                                          ;    ;
+;;   ;; make latexmk available via C-c C-c                                                  ;    ;
+;;   ;; Note: SyncTeX is setup via ~/.latexmkrc (see below)                                 ;    ;
+;;   (add-hook 'LaTeX-mode-hook (lambda ()                                                  ;    ;
+;;     (push                                                                                ;    ;
+;;      '("latexmk" "latexmk -pdf %s" TeX-run-TeX nil t                                     ;    ;
+;;        :help "Run latexmk on file")                                                      ;    ;
+;;      TeX-command-list)))                                                                 ;    ;
+;;   ;(add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))           ;    ;
+;;                                                                                          ;    ;
+;;   ;; use Skim as default pdf viewer                                                      ;    ;
+;;   ;; Skim's displayline is used for forward search (from .tex to .pdf)                   ;    ;
+;;   ;; option -b highlights the current line; option -g opens Skim in the background       ;    ;
+;;   (setq TeX-view-program-selection '((output-pdf "PDF Viewer")))                         ;    ;
+;;   (setq TeX-view-program-list                                                            ;    ;
+;;     '(("PDF Viewer"                                                                      ;    ;
+;;        "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b"        ;    ;
+;;        )))                                                                               ;    ;
+;;                                                                                          ;    ;
+;;   (server-start); start emacs in server mode so that skim can talk to it                 ;    ;
+;; )))                                                                                      ;    ;
+;;                                                                                          ;    ;
+;; ;;;; For reference, here my .latexmkrc                                                   ;    ;
+;; ;; # my latexmk configuration file - last update: 2016-03-13                             ;    ;
+;;                                                                                          ;    ;
+;; ;; $pdflatex = 'pdflatex -interaction=nonstopmode -synctex=1 %O %S';                     ;    ;
+;; ;; $pdf_mode = 1; # generate pdf via pdflatex                                            ;    ;
+;; ;; $postscript_mode = $dvi_mode = 0;                                                     ;    ;
+;;                                                                                          ;    ;
+;; ;; $preview_continuous_mode = 1;                                                         ;    ;
+;; ;; #$force_mode = 1;                                                                     ;    ;
+;;                                                                                          ;    ;
+;; ;; $pdf_previewer = "open -a /Applications/Skim.app -g %S"; #default for OS-X systems    ;    ;
+;; ;; $clean_ext = 'bbl rel %R-blx.bib %R.synctex.gz';                                      ;    ;
+;;                                                                                          ;    ;
+;;                                                                                          ;    ;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
                                                                                               ;
-                                                                                              ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
-;; Outline Minor Mode                                                                   ;;    ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
-                                                                                         ;    ;
-;(add-hook 'LaTeX-mode-hook (lambda() (outline-minor-mode t)))                           ;    ;
-                                                                                         ;    ;
-;(add-hook 'outline-minor-mode-hook                                                      ;    ;
-;          (lambda ()                                                                    ;    ;
-;            (require 'outline-magic)                                                    ;    ;
-;            (define-key outline-minor-mode-map [C-tab] 'outline-cycle)))                ;    ;
-                                                                                         ;    ;
-                                                                                         ;    ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
-                                                                                              ;
-                                                                                              ;
-                                                                                              ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
-;; Synctex with Skim (Mac OS X)                                                         ;;    ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
-                                                                                         ;    ;
-;; only when opened as App                                                               ;    ;
-(cond                                                                                    ;    ;
-((string-equal system-type "darwin")                                                     ;    ;
-(when (display-graphic-p)                                                                ;    ;
-                                                                                         ;    ;
-  ;; make latexmk available via C-c C-c                                                  ;    ;
-  ;; Note: SyncTeX is setup via ~/.latexmkrc (see below)                                 ;    ;
-  (add-hook 'LaTeX-mode-hook (lambda ()                                                  ;    ;
-    (push                                                                                ;    ;
-     '("latexmk" "latexmk -pdf %s" TeX-run-TeX nil t                                     ;    ;
-       :help "Run latexmk on file")                                                      ;    ;
-     TeX-command-list)))                                                                 ;    ;
-  ;(add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))           ;    ;
-                                                                                         ;    ;
-  ;; use Skim as default pdf viewer                                                      ;    ;
-  ;; Skim's displayline is used for forward search (from .tex to .pdf)                   ;    ;
-  ;; option -b highlights the current line; option -g opens Skim in the background       ;    ;
-  (setq TeX-view-program-selection '((output-pdf "PDF Viewer")))                         ;    ;
-  (setq TeX-view-program-list                                                            ;    ;
-    '(("PDF Viewer"                                                                      ;    ;
-       "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b"        ;    ;
-       )))                                                                               ;    ;
-                                                                                         ;    ;
-  (server-start); start emacs in server mode so that skim can talk to it                 ;    ;
-)))                                                                                      ;    ;
-                                                                                         ;    ;
-;;;; For reference, here my .latexmkrc                                                   ;    ;
-;; # my latexmk configuration file - last update: 2016-03-13                             ;    ;
-                                                                                         ;    ;
-;; $pdflatex = 'pdflatex -interaction=nonstopmode -synctex=1 %O %S';                     ;    ;
-;; $pdf_mode = 1; # generate pdf via pdflatex                                            ;    ;
-;; $postscript_mode = $dvi_mode = 0;                                                     ;    ;
-                                                                                         ;    ;
-;; $preview_continuous_mode = 1;                                                         ;    ;
-;; #$force_mode = 1;                                                                     ;    ;
-                                                                                         ;    ;
-;; $pdf_previewer = "open -a /Applications/Skim.app -g %S"; #default for OS-X systems    ;    ;
-;; $clean_ext = 'bbl rel %R-blx.bib %R.synctex.gz';                                      ;    ;
-                                                                                         ;    ;
-                                                                                         ;    ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
-                                                                                              ;
-                                                                                              ;
-                                                                                              ;
+ 	                                                                                      ;
+	                                                                                      ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
 ;; Synctex with SumatraPDF (Windows 10)                                                 ;;    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    ;
@@ -693,7 +700,7 @@
   (setq TeX-source-correlate-mode t)                                                     ;    ;
   (setq TeX-source-correlate-method 'synctex)                                            ;    ;
   (setq TeX-view-program-list                                                            ;    ;
-    '(("Sumatra PDF" ("\"C:/Program Files (x86)/SumatraPDF/SumatraPDF.exe\" -reuse-instance"  ; 
+    '(("Sumatra PDF" ("\"C:/ProgramData/chocolatey/bin/SumatraPDF.exe\" -reuse-instance" ;    ;
       (mode-io-correlate " -forward-search %b %n ") " %o"))))                            ;    ;
                                                                                          ;    ;
   (eval-after-load 'tex                                                                  ;    ;
@@ -709,7 +716,6 @@
                                                                                               ;
                                                                                               ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 
 
 
