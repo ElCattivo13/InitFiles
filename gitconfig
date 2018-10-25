@@ -1,8 +1,8 @@
 [user]
 	name = Stephan Boehme
-	email = stephan.boehme@tu-dresden.de
-[credential]
-	helper = osxkeychain
+	email = stephan.boehme@posteo.de
+;[credential]
+;	helper = osxkeychain
 [core]
 	editor = emacs
 	pager = less
@@ -22,11 +22,11 @@
 	status = auto
 	ui = auto
 	interactive = auto
-[merge]
-	ff = false
-	tool = extMerge
-[mergetool "extMerge"]
-	cmd = extMerge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
-	trustExitCode = false
-[diff]
-	external = extDiff
+;[merge]
+;	ff = false
+;	tool = extMerge
+;[mergetool "extMerge"]
+;	cmd = extMerge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+;	trustExitCode = false
+;[diff]
+;	external = extDiff
