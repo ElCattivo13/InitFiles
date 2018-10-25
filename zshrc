@@ -42,8 +42,8 @@ export OS=$(uname -s)
 
 # LaTeX
 case $(uname -s) in
-    Darwin) export PATH=/usr/local/texlive/2017/bin/x86_64-darwin:/opt/local/bin:$PATH ;;
-    Linux) export PATH=/usr/local/texlive/2016/bin/x86_64-linux:$PATH ;;
+    Darwin) export PATH=/usr/local/texlive/2017/bin/universal-darwin:/usr/local/texlive/2013/bin/x86_64-darwin:/opt/local/bin:$PATH ;;
+    Linux) export PATH=/usr/local/texlive/2018/bin/x86_64-linux:$PATH ;;
 esac
 #export TEXINPUTS=".:/users/lat/lippmann/Documents/LaTeXInputs/:"
 #export BIBINPUTS=".:/users/lat/lippmann/Documents/LaTeXInputs/:"
@@ -332,12 +332,13 @@ alias md='mkdir -p'
 # sudo/man fix
 alias sudo='nocorrect sudo'
 alias man='nocorrect man'
-
+alias pass='nocorrect pass'
 
 # my new aliases
 
 alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
 alias findDuplicates='find . ! -readable -prune -not -empty -type f -printf "%s\n" | sort -rn | uniq -d | xargs -I{} -n1 find -type f -size {}c -print0 | xargs -0 md5sum | sort | uniq -w32 --all-repeated=separate'
+alias emacs='emacs -nw'
 
 case $(uname -s) in
     Darwin)
